@@ -1,0 +1,79 @@
+services:
+  visualdynamics:
+    image: labioquim/visualdynamics:dev
+    build:
+      context: .
+      dockerfile: apps/visualdynamics/Dockerfile.dev
+    restart: always
+    command: ["yarn", "workspace", "visualdynamics", "start:dev"]
+    env_file: .env
+    depends_on:
+      - database
+      - mailer
+      - redis
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./:/app
+      - visualdynamics:/files
+      - /app/node_modules
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile.dev
+    restart: always
+    image: labioquim/website:dev
+    command: ["yarn", "workspace", "web", "dev"]
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+      - mailer
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/apps/web/.next
+
+  mailer:
+    image: murilofuza/simple-mail:0.0.6
+    restart: always
+    env_file: .env
+    ports:
+      - "3002:3000"
+    depends_on: 
+      - redis
+    volumes:
+      - ./emails:/templates
+
+  database:
+    image: postgres:17-alpine
+    restart: always
+    ports:
+      - "65432:5432"
+    environment:
+      POSTGRES_PASSWORD: "${DB_PASS}"
+      POSTGRES_DB: "${DB_DATABASE}"
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - redis:/data
+
+volumes:
+  database:
+    driver: nfsvol
+  redis:
+    driver: nfsvol
+  visualdynamics:
+    driver: nfsvol

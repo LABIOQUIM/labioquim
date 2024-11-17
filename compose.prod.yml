@@ -1,0 +1,72 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/ui/Dockerfile
+    image: labioquim/plasmoia-ui:prod
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.plasmoia.loadbalancer.server.port=3000"
+      - "traefik.http.routers.plasmoia.rule=Host(`${UI_URL}`)"
+      - "traefik.http.routers.plasmoia.service=plasmoia"
+      - "traefik.http.routers.plasmoia.tls=true"
+      - "traefik.http.routers.plasmoia.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.plasmoia.tls.domains[0].main=${UI_URL}"
+      - "traefik.http.routers.plasmoia.entryPoints=websecure"
+    depends_on:
+      - database
+    networks:
+      - traefik
+      - default
+
+  predictor:
+    build: 
+      context: ./apps/predictor
+      dockerfile: Dockerfile.dev
+    image: labioquim/plasmoia-predictor:dev
+    privileged: true
+    restart: always
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+    volumes:
+      - ./apps/predictor/app:/code/app
+    networks:
+      - default
+
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "plasmoia"
+    restart: always
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - default
+
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - redis:/data
+    networks:
+      - default
+
+  mailer:
+    image: murilofuza/simple-mail:0.0.6
+    env_file: .env
+    volumes:
+      - ./emails:/templates
+    networks:
+      - default
+
+volumes:
+  database:
+    driver: nfsvol
+  redis:
+    driver: nfsvol
+
+networks:
+  traefik:
+    external: true
+  default:

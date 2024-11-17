@@ -1,0 +1,6 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - 45px - var(--app-shell-header-offset) - calc(var(--app-shell-padding) * 3));
+  gap: var(--mantine-spacing-md);
+}

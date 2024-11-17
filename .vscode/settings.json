@@ -1,0 +1,22 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "[prisma]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "emmet.includeLanguages": {
+    "postcss": "css"
+  },
+  "css.lint.unknownProperties": "ignore",
+  "scss.lint.unknownProperties": "ignore",
+  "cssVariables.lookupFiles": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "node_modules/@mantine/core/styles.css"
+  ],
+  "python.languageServer": "Jedi"
+}
