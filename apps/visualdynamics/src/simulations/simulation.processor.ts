@@ -1,5 +1,6 @@
+import axios from "axios";
 import { DoneCallback, Job } from "bull";
-import { prisma, SIMULATION_TYPE } from "database";
+import { prisma } from "database";
 import { existsSync, rmSync, writeFileSync } from "fs";
 import * as path from "path";
 import { chdir } from "process";
@@ -7,11 +8,7 @@ import { executeCommands } from "src/utils/executeCommands";
 import { loadCommands } from "src/utils/loadCommands";
 import { setTimeout } from "timers/promises";
 
-interface SimulateData {
-  simulationId: string;
-  userName: string;
-  type: SIMULATION_TYPE;
-}
+import { SimulateData } from "./simulation.types";
 
 async function onError(job: Job<SimulateData>, error: Error): Promise<void> {
   console.log(`Error in job: ${job.id}. Error: ${error.message}`);
@@ -25,7 +22,16 @@ async function onError(job: Job<SimulateData>, error: Error): Promise<void> {
       errorCause: error.message,
     },
   });
-  rmSync(`/files/${job.data.userName}/running`);
+  rmSync(`/files/${job.data.user.userName}/running`);
+  await axios.post("http://mailer:3000/send-email", {
+    from: `LABIOQUIM <${process.env.SMTP_USER}>`,
+    to: job.data.user.email,
+    subject: "[LABIOQUIM] About your simulation",
+    template: "simulation-errored.hbs",
+    context: {
+      name: job.data.user.firstName,
+    },
+  });
 }
 
 export default async function (job: Job<SimulateData>, cb: DoneCallback) {
@@ -43,8 +49,8 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
         startedAt: new Date(),
       },
     });
-    const queuedFilePath = `/files/${job.data.userName}/queued`;
-    const runningFilePath = `/files/${job.data.userName}/running`;
+    const queuedFilePath = `/files/${job.data.user.userName}/queued`;
+    const runningFilePath = `/files/${job.data.user.userName}/running`;
     if (existsSync(queuedFilePath)) {
       rmSync(queuedFilePath);
     }
@@ -56,7 +62,10 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
 
   try {
     console.log(`Processing commands for job ${job.id}...`);
-    const { type, userName } = job.data;
+    const {
+      type,
+      user: { userName },
+    } = job.data;
 
     const folder = path.resolve(`/files/${userName}/${type.toLowerCase()}`);
 
@@ -76,7 +85,10 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
 
   try {
     console.log(`Processing post-steps for job ${job.id}...`);
-    const { type, userName } = job.data;
+    const {
+      type,
+      user: { userName },
+    } = job.data;
 
     const folder = path.resolve(`/files/${userName}/${type.toLowerCase()}`);
 
@@ -94,6 +106,15 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
 
     writeFileSync(fileEndedPath, "ended");
     rmSync(`/files/${userName}/running`);
+    await axios.post("http://mailer:3000/send-email", {
+      from: `LABIOQUIM <${process.env.SMTP_USER}>`,
+      to: job.data.user.email,
+      subject: "[LABIOQUIM] About your simulation",
+      template: "simulation-completed.hbs",
+      context: {
+        name: job.data.user.firstName,
+      },
+    });
   } catch {
     onError(job, new Error("Failed on post-steps"));
     cb(new Error(`${job.data.simulationId} failed on post-steps!`));

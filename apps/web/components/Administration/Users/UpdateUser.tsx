@@ -125,7 +125,7 @@ export function UpdateUser({ user }: Props) {
         </Box>
       </Modal>
 
-      <ActionIcon variant="subtle" onClick={open}>
+      <ActionIcon title="Edit User" variant="light" size="lg" onClick={open}>
         <IconUserEdit />
       </ActionIcon>
     </>

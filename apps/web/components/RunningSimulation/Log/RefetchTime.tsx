@@ -11,10 +11,11 @@ export function RefetchTime() {
 
   useEffect(() => {
     if (secsToRefetch === 0) {
-      refetch();
+      setTimeout(() => {
+        refetch();
+      }, 100);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [secsToRefetch]);
+  }, [refetch, secsToRefetch]);
 
   useEffect(() => {
     if (dataUpdatedAt) {

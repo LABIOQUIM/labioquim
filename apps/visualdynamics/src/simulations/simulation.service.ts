@@ -80,6 +80,12 @@ export class SimulationService {
     userName: string,
     type: SIMULATION_TYPE
   ) {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        userName,
+      },
+    });
+
     await this.prisma.simulation.update({
       where: {
         id: simulationId,
@@ -91,7 +97,7 @@ export class SimulationService {
     writeFileSync(`/files/${userName}/queued`, type);
     await this.simulationQueue.add({
       simulationId,
-      userName,
+      user,
       type,
     });
   }

@@ -29,7 +29,7 @@ export async function register(data: RegisterFormInputs) {
       from: `LABIOQUIM <${process.env.SMTP_USER}>`,
       to: data.email,
       subject: "[LABIOQUIM] Your registration",
-      template: "activation.hbs",
+      template: "account-activation.hbs",
       context: {
         name: data.firstName,
         username: data.userName,
