@@ -14,6 +14,7 @@ import { IconCancel, IconCheck, IconUserEdit } from "@tabler/icons-react";
 import { Prisma, User } from "database";
 
 import { updateUser } from "@/actions/administration/updateUser";
+import { useUserAdmin } from "@/app/[locale]/administration/users/UserAdmin";
 import { Alert } from "@/components/Alert";
 import { useUsers } from "@/hooks/administration/useUsers";
 
@@ -24,18 +25,20 @@ interface Props {
 }
 
 export function UpdateUser({ user }: Props) {
-  const { refetch: refetchUsers } = useUsers();
-  const [opened, { open, close }] = useDisclosure(false);
-  const [status, setStatus] = useState<FormSubmissionStatus>();
   const { getInputProps, onSubmit, reset } = useForm<Prisma.UserUpdateInput>({
     initialValues: {
       userName: user.userName,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: user.firstName ?? "",
+      lastName: user.lastName ?? "",
       role: user.role,
     },
   });
+  const { queryText } = useUserAdmin();
+  const { take, page } = useUserAdmin();
+  const { refetch: refetchUsers } = useUsers(queryText, take, page);
+  const [opened, { open, close }] = useDisclosure(false);
+  const [status, setStatus] = useState<FormSubmissionStatus>();
 
   async function doUpdate(updatedUser: Prisma.UserUpdateInput) {
     setStatus({ status: "loading" });

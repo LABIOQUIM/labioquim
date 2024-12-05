@@ -7,6 +7,7 @@ declare global {
     icon: Icon;
     label: string;
     href: string;
+    disabled?: boolean;
     role?: USER_ROLE;
     badge?: {
       color: MantineColor;
@@ -17,5 +18,6 @@ declare global {
   interface NavSection {
     title: string;
     links: NavLink[];
+    disabled?: boolean;
   }
 }

@@ -6,6 +6,7 @@ import { IconCancel, IconHammer, IconHammerOff } from "@tabler/icons-react";
 import { User } from "database";
 
 import { updateUser } from "@/actions/administration/updateUser";
+import { useUserAdmin } from "@/app/[locale]/administration/users/UserAdmin";
 import { Alert } from "@/components/Alert";
 import { useUsers } from "@/hooks/administration/useUsers";
 
@@ -16,7 +17,8 @@ interface Props {
 }
 
 export function BanUser({ user }: Props) {
-  const { refetch: refetchUsers } = useUsers();
+  const { take, page, queryText } = useUserAdmin();
+  const { refetch: refetchUsers } = useUsers(queryText, take, page);
   const [opened, { open, close }] = useDisclosure(false);
   const [status, setStatus] = useState<FormSubmissionStatus>();
 

@@ -13,17 +13,29 @@ import classes from "./Nav.module.css";
 
 const nav: NavSection[] = [
   {
-    title: "Users",
+    title: "LABIOQUIM",
     links: [
       {
         href: "/administration/users",
         icon: IconUsers,
         label: "Users",
       },
+      {
+        href: "/administration/server",
+        icon: IconServer,
+        disabled: true,
+        label: "Server Manager",
+      },
+      {
+        href: "/administration/settings",
+        icon: IconSettings2,
+        label: "App Settings",
+      },
     ],
   },
   {
     title: "Visual Dynamics",
+    disabled: true,
     links: [
       {
         href: "/administration/simulations",
@@ -34,6 +46,7 @@ const nav: NavSection[] = [
   },
   {
     title: "PlasmoQSAR",
+    disabled: true,
     links: [
       {
         href: "/administration/qsar",
@@ -44,26 +57,12 @@ const nav: NavSection[] = [
   },
   {
     title: "PlasmoIA",
+    disabled: true,
     links: [
       {
         href: "/administration/simulations",
         icon: IconReportAnalytics,
         label: "Analytics",
-      },
-    ],
-  },
-  {
-    title: "System",
-    links: [
-      {
-        href: "/administration/server",
-        icon: IconServer,
-        label: "Server Manager",
-      },
-      {
-        href: "/administration/settings",
-        icon: IconSettings2,
-        label: "App Settings",
       },
     ],
   },

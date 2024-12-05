@@ -75,7 +75,9 @@ export class SimulationController {
       await this.simulationService.addSimulationToQueue(
         simulationId,
         request.userName,
-        "acpype"
+        "acpype",
+        body.successEmail,
+        body.errorEmail
       );
 
       return "added-to-queue";
@@ -106,7 +108,9 @@ export class SimulationController {
       await this.simulationService.addSimulationToQueue(
         simulationId,
         request.userName,
-        "apo"
+        "apo",
+        body.successEmail,
+        body.errorEmail
       );
 
       return "added-to-queue";

@@ -4,7 +4,6 @@ import { DatesProvider } from "@mantine/dates";
 import { Notifications } from "@mantine/notifications";
 import { Metadata } from "next";
 
-import { EmailValidationModal } from "@/components/Auth/EmailValidationModal";
 import { Shell } from "@/components/Layout/Shell/Shell";
 import { I18nProviderClient } from "@/locales/client";
 import { theme } from "@/theme";
@@ -47,10 +46,7 @@ export default async function RootLayout({
               }}
             >
               <Notifications position="top-right" />
-              <Shell>
-                {children}
-                <EmailValidationModal />
-              </Shell>
+              <Shell>{children}</Shell>
             </DatesProvider>
           </MantineProvider>
         </I18nProviderClient>

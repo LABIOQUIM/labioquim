@@ -1,5 +1,14 @@
 .container {
   overflow-x: auto;
+  flex: 1;
+}
+
+.table {
+  flex: 1;
+}
+
+.loading_container {
+  margin: auto;
 }
 
 .td {

@@ -15,7 +15,11 @@ export function AdministrationNavSection({ section }: Props) {
       <Text className={classes.section_title}>{section.title}</Text>
       <Box className={classes.links_container}>
         {section.links.map((link) => (
-          <AdministrationNavItem key={JSON.stringify(link)} link={link} />
+          <AdministrationNavItem
+            disabled={section.disabled || link.disabled}
+            key={JSON.stringify(link)}
+            link={link}
+          />
         ))}
       </Box>
     </Box>

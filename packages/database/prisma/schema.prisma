@@ -9,6 +9,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum SYSTEM_MODE {
+  ACTIVE
+  MAINTENANCE
+  DOWN
+}
+
+model Settings {
+  systemId   String      @id @map("system_id")
+  systemMode SYSTEM_MODE @map("system_mode")
+  createdAt  DateTime    @default(now()) @map("created_at")
+  updatedAt  DateTime?   @updatedAt @map("updated_at")
+
+  @@map("settings")
+}
+
 enum USER_STATUS {
   ACTIVE
   INACTIVE
@@ -20,25 +35,25 @@ enum USER_STATUS {
 
 enum USER_ROLE {
   USER
-  ADVANCED_USER
+  ADMIN
   ADMINISTRATOR
 }
 
 model User {
-  id       String @id @unique @default(uuid())
-  userName String @unique @map("user_name")
-  email    String @unique
-  password String
+  id       String  @id @unique @default(uuid())
+  userName String  @unique @map("user_name")
+  email    String  @unique
+  password String?
 
-  firstName String      @map("first_name")
+  firstName String?     @map("first_name")
   lastName  String?     @map("last_name")
   status    USER_STATUS @default(AWAITING_EMAIL_VALIDATION)
   role      USER_ROLE   @default(USER)
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
-  emailValidation UserEmailValidation?
+  emailValidation UserEmailValidation[]
   sessions        Session[]
   simulations     Simulation[]
 
@@ -59,6 +74,7 @@ model UserEmailValidation {
   id        String   @id @unique @default(uuid())
   userId    String   @unique @map("user_id")
   used      Boolean  @default(false)
+  valid     Boolean  @default(true) @map("valid")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

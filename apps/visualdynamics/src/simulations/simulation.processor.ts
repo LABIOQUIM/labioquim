@@ -27,10 +27,7 @@ async function onError(job: Job<SimulateData>, error: Error): Promise<void> {
     from: `LABIOQUIM <${process.env.SMTP_USER}>`,
     to: job.data.user.email,
     subject: "[LABIOQUIM] About your simulation",
-    template: "simulation-errored.hbs",
-    context: {
-      name: job.data.user.firstName,
-    },
+    html: job.data.errorEmail,
   });
 }
 
@@ -110,10 +107,7 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
       from: `LABIOQUIM <${process.env.SMTP_USER}>`,
       to: job.data.user.email,
       subject: "[LABIOQUIM] About your simulation",
-      template: "simulation-completed.hbs",
-      context: {
-        name: job.data.user.firstName,
-      },
+      html: job.data.successEmail,
     });
   } catch {
     onError(job, new Error("Failed on post-steps"));

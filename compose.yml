@@ -42,16 +42,31 @@ services:
       - /app/node_modules
       - /app/apps/web/.next
 
+  email:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile.dev
+    restart: always
+    image: labioquim/email:dev
+    command: ["yarn", "workspace", "web", "email"]
+    ports:
+      - "3003:3000"
+    depends_on:
+      - database
+      - mailer
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/apps/web/.next
+
   mailer:
-    image: murilofuza/simple-mail:0.0.6
+    image: murilofuza/simple-mail:0.0.9
     restart: always
     env_file: .env
     ports:
       - "3002:3000"
     depends_on: 
       - redis
-    volumes:
-      - ./emails:/templates
 
   database:
     image: postgres:17-alpine

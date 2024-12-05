@@ -26,6 +26,8 @@ export async function login(userName: string, password: string) {
       },
     });
 
+    console.log(user);
+
     if (!user) {
       return "invalid-credentials";
     }
@@ -34,7 +36,7 @@ export async function login(userName: string, password: string) {
       return signInReturnCodes[user.status];
     }
 
-    if (!(await verify(user.password, password))) {
+    if (!user.password || !(await verify(user.password, password))) {
       return "invalid-credentials";
     }
 

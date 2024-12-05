@@ -78,7 +78,9 @@ export class SimulationService {
   async addSimulationToQueue(
     simulationId: string,
     userName: string,
-    type: SIMULATION_TYPE
+    type: SIMULATION_TYPE,
+    successEmail: string,
+    errorEmail: string
   ) {
     const user = await this.prisma.user.findFirst({
       where: {
@@ -99,6 +101,8 @@ export class SimulationService {
       simulationId,
       user,
       type,
+      successEmail,
+      errorEmail,
     });
   }
 

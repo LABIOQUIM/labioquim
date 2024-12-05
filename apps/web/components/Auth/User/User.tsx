@@ -22,7 +22,7 @@ export function User() {
     return null;
   }
 
-  const userFullName = `${data.user.firstName} ${data.user.lastName}`;
+  const userFullName = `${data.user.firstName} ${data.user.lastName ?? ""}`;
 
   return (
     <Box className={classes.user}>

@@ -13,6 +13,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { render } from "@react-email/components";
 import {
   IconAtom2,
   IconChevronDown,
@@ -23,6 +24,9 @@ import { SIMULATION_TYPE } from "database";
 import { useRouter } from "next/navigation";
 
 import { submitNewSimulation } from "@/actions/simulation/submitNewSimulation";
+import SimulationCompletedEmail from "@/emails/simulation/Completed";
+import SimulationErroredEmail from "@/emails/simulation/Errored";
+import { useAuth } from "@/hooks/auth/useAuth";
 import { useRunningSimulation } from "@/hooks/simulation/useRunningSimulation";
 
 import { Alert } from "../Alert";
@@ -48,6 +52,7 @@ interface FormProps {
 }
 
 export function NewSimulationForm({ simulationType }: Props) {
+  const { data: auth } = useAuth();
   const { refetch } = useRunningSimulation();
   const forceFields = allForceFields[simulationType];
   const [isLoading, setIsLoading] = useState<boolean>();
@@ -126,7 +131,7 @@ export function NewSimulationForm({ simulationType }: Props) {
     return data;
   };
 
-  const onSubmitSimulation = (shouldRun?: boolean) => {
+  const onSubmitSimulation = async (shouldRun?: boolean) => {
     if (validate().hasErrors) {
       return;
     }
@@ -135,51 +140,68 @@ export function NewSimulationForm({ simulationType }: Props) {
 
     if (shouldRun) {
       data.append("shouldRun", "true");
+      data.append(
+        "successEmail",
+        await render(
+          <SimulationCompletedEmail
+            email={auth?.user?.email || ""}
+            firstName={auth?.user?.firstName || ""}
+            platformURL={window.location.href || ""}
+          />
+        )
+      );
+      data.append(
+        "errorEmail",
+        await render(
+          <SimulationErroredEmail
+            email={auth?.user?.email || ""}
+            firstName={auth?.user?.firstName || ""}
+            platformURL={window.location.href || ""}
+          />
+        )
+      );
     }
 
-    submitNewSimulation(data, simulationType)
-      .then((response) => {
-        if (response === "added-to-queue") {
-          refetch();
-          router.push("/simulations/running");
-        } else if (response === "unauthenticated") {
-          router.replace("/?do=login&from=unauthenticated");
-        } else if (response === "queued-or-running") {
-          refetch();
-          router.push("/simulations/running");
-        } else if (response === "unknown-error") {
-          //
-        } else {
-          let filename = simulationType;
-          filename += `-${values.filePDB.name.split(".")[0]}`;
+    const response = await submitNewSimulation(data, simulationType);
+    if (response === "added-to-queue") {
+      refetch();
+      router.push("/simulations/running");
+    } else if (response === "unauthenticated") {
+      router.replace("/?do=login&from=unauthenticated");
+    } else if (response === "queued-or-running") {
+      refetch();
+      router.push("/simulations/running");
+    } else if (response === "unknown-error") {
+      //
+    } else {
+      let filename = simulationType;
+      filename += `-${values.filePDB.name.split(".")[0]}`;
 
-          if (values.fileLigandITP) {
-            filename += `-${values.fileLigandITP.name.split(".")[0]}`;
-          }
+      if (values.fileLigandITP) {
+        filename += `-${values.fileLigandITP.name.split(".")[0]}`;
+      }
 
-          if (values.fileLigandPDB) {
-            filename += `-${values.fileLigandPDB.name.split(".")[0]}`;
-          }
+      if (values.fileLigandPDB) {
+        filename += `-${values.fileLigandPDB.name.split(".")[0]}`;
+      }
 
-          filename += "-commands.txt";
+      filename += "-commands.txt";
 
-          const element = document.createElement("a");
-          element.setAttribute(
-            "href",
-            "data:text/plain;charset=utf-8," +
-              encodeURIComponent(response.join(""))
-          );
-          element.setAttribute("download", filename);
+      const element = document.createElement("a");
+      element.setAttribute(
+        "href",
+        "data:text/plain;charset=utf-8," + encodeURIComponent(response.join(""))
+      );
+      element.setAttribute("download", filename);
 
-          element.style.display = "none";
-          document.body.appendChild(element);
+      element.style.display = "none";
+      document.body.appendChild(element);
 
-          element.click();
+      element.click();
 
-          document.body.removeChild(element);
-        }
-      })
-      .finally(() => setIsLoading(false));
+      document.body.removeChild(element);
+    }
+    setIsLoading(false);
   };
 
   const onSubmitRun = () => {

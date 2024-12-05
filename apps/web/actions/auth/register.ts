@@ -33,7 +33,7 @@ export async function register(data: RegisterFormInputs) {
       context: {
         name: data.firstName,
         username: data.userName,
-        activationURL: `${process.env.APP_URL}/activate/${userActivation.id}`,
+        activationURL: `${process.env.APP_URL}/account/email-validation/${userActivation.id}`,
       },
     });
 
