@@ -11,9 +11,7 @@ export function RefetchTime() {
 
   useEffect(() => {
     if (secsToRefetch === 0) {
-      setTimeout(() => {
-        refetch();
-      }, 100);
+      refetch();
     }
   }, [refetch, secsToRefetch]);
 

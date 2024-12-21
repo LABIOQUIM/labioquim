@@ -35,12 +35,16 @@ const nav: NavSection[] = [
   },
   {
     title: "Visual Dynamics",
-    disabled: true,
     links: [
       {
-        href: "/administration/simulations",
+        href: "/administration/visualdynamics/status",
         icon: IconReportAnalytics,
-        label: "Analytics",
+        label: "Status",
+      },
+      {
+        href: "/administration/visualdynamics/settings",
+        icon: IconSettings2,
+        label: "Settings",
       },
     ],
   },

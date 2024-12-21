@@ -9,6 +9,8 @@
   color: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
 
   cursor: default;
+
+  height: 70px;
 }
 
 .signin {

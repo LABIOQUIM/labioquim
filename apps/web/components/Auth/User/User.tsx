@@ -29,15 +29,15 @@ export function User() {
       <Group>
         <Avatar radius="xl" />
 
-        <div style={{ flex: 1 }}>
-          <Text size="sm" fw={500}>
+        <Box style={{ flex: 1 }}>
+          <Text lineClamp={1} size="sm" fw={500}>
             {userFullName.trim()}
           </Text>
 
-          <Text c="dimmed" size="xs">
+          <Text lineClamp={1} c="dimmed" size="xs">
             {data.user.email}
           </Text>
-        </div>
+        </Box>
 
         <ActionIcon color="red" onClick={onLogout} size="lg" variant="light">
           <IconLogout size={18} />
