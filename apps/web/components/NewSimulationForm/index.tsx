@@ -164,8 +164,10 @@ export function NewSimulationForm({ simulationType }: Props) {
 
     const response = await submitNewSimulation(data, simulationType);
     if (response === "added-to-queue") {
-      refetch();
-      router.push("/simulations/running");
+      setTimeout(() => {
+        refetch();
+        router.push("/simulations/running");
+      }, 2000);
     } else if (response === "unauthenticated") {
       router.replace("/?do=login&from=unauthenticated");
     } else if (response === "queued-or-running") {
