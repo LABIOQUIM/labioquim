@@ -11,10 +11,12 @@ import {
   Switch,
   Text,
   TextInput,
+  Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { render } from "@react-email/components";
 import {
+  IconAlertTriangle,
   IconAtom2,
   IconChevronDown,
   IconFileDownload,
@@ -28,6 +30,7 @@ import SimulationCompletedEmail from "@/emails/simulation/Completed";
 import SimulationErroredEmail from "@/emails/simulation/Errored";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useRunningSimulation } from "@/hooks/simulation/useRunningSimulation";
+import { useSettings } from "@/hooks/utils/useSettings";
 
 import { Alert } from "../Alert";
 
@@ -115,6 +118,8 @@ export function NewSimulationForm({ simulationType }: Props) {
     },
   });
   const router = useRouter();
+
+  const { data: settings } = useSettings("visualdynamics");
 
   const getFormData = () => {
     const data = new FormData();
@@ -209,6 +214,30 @@ export function NewSimulationForm({ simulationType }: Props) {
   const onSubmitRun = () => {
     onSubmitSimulation(true);
   };
+
+  if (settings === "error" || settings === "unauthenticated") {
+    return "Failed to load settings";
+  }
+
+  if (settings?.systemMode === "MAINTENANCE") {
+    return (
+      <Box className={classes.containerDownOrMaintenance}>
+        <IconAlertTriangle size={48} />
+        <Title order={3}>
+          Visual Dynamics is currently down for maintenance.
+        </Title>
+      </Box>
+    );
+  }
+
+  if (settings?.systemMode === "DOWN") {
+    return (
+      <Box className={classes.containerDownOrMaintenance}>
+        <IconAlertTriangle size={48} />
+        <Title order={3}>Visual Dynamics is currently down.</Title>
+      </Box>
+    );
+  }
 
   return (
     <Box

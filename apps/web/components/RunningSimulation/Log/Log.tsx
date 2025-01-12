@@ -9,6 +9,7 @@ import {
 
 import { Loader } from "@/components/Loader/Loader";
 import { useRunningSimulation } from "@/hooks/simulation/useRunningSimulation";
+import { useSettings } from "@/hooks/utils/useSettings";
 
 import { RefetchTime } from "./RefetchTime";
 
@@ -16,6 +17,31 @@ import classes from "./Log.module.css";
 
 export function Log() {
   const { data, isError, isLoading } = useRunningSimulation();
+  const { data: settings } = useSettings("visualdynamics");
+
+  if (settings === "error" || settings === "unauthenticated") {
+    return "Failed to load settings";
+  }
+
+  if (settings?.systemMode === "MAINTENANCE") {
+    return (
+      <Box className={classes.containerDownOrMaintenance}>
+        <IconAlertTriangle size={48} />
+        <Title order={3}>
+          Visual Dynamics is currently down for maintenance.
+        </Title>
+      </Box>
+    );
+  }
+
+  if (settings?.systemMode === "DOWN") {
+    return (
+      <Box className={classes.containerDownOrMaintenance}>
+        <IconAlertTriangle size={48} />
+        <Title order={3}>Visual Dynamics is currently down.</Title>
+      </Box>
+    );
+  }
 
   if (!data || isLoading) {
     return (

@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { Box, Text } from "@mantine/core";
 
 import { useRunningSimulation } from "@/hooks/simulation/useRunningSimulation";
+import { useSettings } from "@/hooks/utils/useSettings";
 import { dateFormat } from "@/utils/dateFormat";
 
 import classes from "./SubmissionInfo.module.css";
@@ -24,8 +25,15 @@ function InfoText({ label, value }: { label: string; value?: string | null }) {
 
 export function SubmissionInfo() {
   const { data, isError, isLoading } = useRunningSimulation();
+  const { data: settings } = useSettings("visualdynamics");
 
-  if (!data || isLoading) {
+  if (
+    !data ||
+    isLoading ||
+    settings === "error" ||
+    settings === "unauthenticated" ||
+    settings?.systemMode !== "ACTIVE"
+  ) {
     return null;
   }
 

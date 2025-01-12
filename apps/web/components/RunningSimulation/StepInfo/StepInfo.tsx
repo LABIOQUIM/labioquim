@@ -4,6 +4,7 @@ import { Box, Text, Title } from "@mantine/core";
 import { IconArrowDown } from "@tabler/icons-react";
 
 import { useRunningSimulation } from "@/hooks/simulation/useRunningSimulation";
+import { useSettings } from "@/hooks/utils/useSettings";
 
 import { Step } from "./Step";
 
@@ -23,8 +24,16 @@ const steps = {
 
 export function StepInfo() {
   const { data, isLoading, isError } = useRunningSimulation();
+  const { data: settings } = useSettings("visualdynamics");
 
-  if (!data || isLoading || isError) {
+  if (
+    !data ||
+    isLoading ||
+    isError ||
+    settings === "error" ||
+    settings === "unauthenticated" ||
+    settings?.systemMode !== "ACTIVE"
+  ) {
     return null;
   }
 

@@ -4,6 +4,17 @@
   gap: var(--mantine-spacing-sm);
 }
 
+.containerDownOrMaintenance {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  gap: var(--mantine-spacing-sm);
+
+  align-items: center;
+  justify-content: center;
+}
+
 .containerSideBySide {
   display: grid;
   grid-template-columns: 1fr;

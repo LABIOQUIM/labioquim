@@ -42,6 +42,17 @@
   width: 100%;
 }
 
+.containerDownOrMaintenance {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  gap: var(--mantine-spacing-sm);
+
+  align-items: center;
+  justify-content: center;
+}
+
 .container_title {
   display: flex;
   flex-direction: row;
