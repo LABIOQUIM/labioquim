@@ -25,14 +25,15 @@ export function Section({ section, toggle, userRole }: Props) {
             return (
               <UnstyledButton
                 component={Link}
-                href={link.href}
+                href={section.disabled ? "#" : link.href}
                 key={link.label}
                 onClick={toggle}
                 className={clsx(classes.linkContainer, {
                   [classes.linkActiveContainer]:
-                    link.href === "/" || link.href === "/simulations"
+                    !section.disabled &&
+                    (link.href === "/" || link.href === "/simulations"
                       ? pathname === link.href
-                      : pathname.startsWith(link.href),
+                      : pathname.startsWith(link.href)),
                 })}
               >
                 <div className={classes.linkInnerContainer}>

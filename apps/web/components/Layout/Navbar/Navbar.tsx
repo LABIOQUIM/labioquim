@@ -45,18 +45,50 @@ const sections: NavSection[] = [
   },
   {
     title: "PlasmoQSAR",
+    disabled: true,
     links: [
-      { icon: IconInfoCircle, label: "About", href: "/qsar/about" },
-      { icon: IconInfoCircle, label: "My Submissions", href: "/qsar" },
-      { icon: IconPlus, label: "New SDF", href: "/qsar/sdf" },
+      {
+        icon: IconInfoCircle,
+        label: "About",
+        href: "/qsar/about",
+        badge: { color: "indigo", message: "WIP" },
+      },
+      {
+        icon: IconInfoCircle,
+        label: "My Submissions",
+        href: "/qsar",
+        badge: { color: "indigo", message: "WIP" },
+      },
+      {
+        icon: IconPlus,
+        label: "New SDF",
+        href: "/qsar/sdf",
+        badge: { color: "indigo", message: "WIP" },
+      },
     ],
   },
   {
     title: "PlasmoIA",
+    disabled: true,
     links: [
-      { icon: IconInfoCircle, label: "About", href: "/ia/about" },
-      { icon: IconInfoCircle, label: "My Submissions", href: "/ia" },
-      { icon: IconPlus, label: "New Image", href: "/ia/image" },
+      {
+        icon: IconInfoCircle,
+        label: "About",
+        href: "/ia/about",
+        badge: { color: "indigo", message: "WIP" },
+      },
+      {
+        icon: IconInfoCircle,
+        label: "My Submissions",
+        href: "/ia",
+        badge: { color: "indigo", message: "WIP" },
+      },
+      {
+        icon: IconPlus,
+        label: "New Image",
+        href: "/ia/image",
+        badge: { color: "indigo", message: "WIP" },
+      },
     ],
   },
 ];
