@@ -29,9 +29,24 @@ const sections: NavSection[] = [
         role: "ADMINISTRATOR",
       },
       { icon: IconHome, label: "Home", href: "/" },
-      { icon: IconInfoCircle, label: "About", href: "/about" },
-      { icon: IconReportAnalytics, label: "Analytics", href: "/analytics" },
-      { icon: IconListNumbers, label: "Tutorials", href: "/tutorials" },
+      {
+        icon: IconInfoCircle,
+        label: "About",
+        href: "#",
+        badge: { color: "indigo", message: "WIP" },
+      },
+      {
+        icon: IconReportAnalytics,
+        label: "Analytics",
+        href: "#",
+        badge: { color: "indigo", message: "WIP" },
+      },
+      {
+        icon: IconListNumbers,
+        label: "Tutorials",
+        href: "#",
+        badge: { color: "indigo", message: "WIP" },
+      },
     ],
   },
   {
