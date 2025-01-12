@@ -6,6 +6,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import dynamic from "next/dynamic";
 
+import { SystemsStatus } from "@/components/Alerts/SystemsStatus";
 import { CenteredLoader } from "@/components/Loader/CenteredLoader";
 import { Loader } from "@/components/Loader/Loader";
 import { Logo } from "@/components/Logo";
@@ -65,7 +66,10 @@ export function Shell({ children }: PropsWithChildren) {
               />
               <Logo />
             </Group>
-            <ServerTime />
+            <Group>
+              <SystemsStatus />
+              <ServerTime />
+            </Group>
           </Group>
         </AppShell.Header>
         <AppShell.Navbar px="md">

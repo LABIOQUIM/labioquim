@@ -15,7 +15,7 @@ import { Prisma, User } from "database";
 
 import { updateUser } from "@/actions/administration/updateUser";
 import { useUserAdmin } from "@/app/[locale]/administration/users/UserAdmin";
-import { Alert } from "@/components/Alert";
+import { Alert } from "@/components/Alerts/Alert";
 import { useUsers } from "@/hooks/administration/useUsers";
 
 import classes from "./UpdateUser.module.css";

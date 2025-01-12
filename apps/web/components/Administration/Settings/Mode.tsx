@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { SegmentedControl } from "@mantine/core";
 
 import { updateSystemMode } from "@/actions/utils/updateSystemMode";
+import { useAllSettings } from "@/hooks/utils/useAllSettings";
 import { useSettings } from "@/hooks/utils/useSettings";
 
 interface Props {
@@ -11,7 +12,8 @@ interface Props {
 
 export function SystemMode({ systemId }: Props) {
   const [isLoading, setIsLoading] = useState(false);
-  const { data, refetch } = useSettings(systemId);
+  const { data, refetch: refetchSettings } = useSettings(systemId);
+  const { refetch: refetchAllSettings } = useAllSettings();
 
   const doUpdate = useCallback(
     async (systemMode: string) => {
@@ -19,13 +21,14 @@ export function SystemMode({ systemId }: Props) {
       const response = await updateSystemMode(systemId, systemMode);
 
       if (response === "success") {
-        await refetch();
+        await refetchSettings();
+        await refetchAllSettings();
         setIsLoading(false);
       } else {
         setIsLoading(false);
       }
     },
-    [refetch, systemId]
+    [refetchSettings, refetchAllSettings, systemId]
   );
 
   if (!data || data === "unauthenticated" || data === "error") {

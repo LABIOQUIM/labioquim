@@ -8,7 +8,7 @@ import { User } from "database";
 
 import { createUserValidation } from "@/actions/administration/createUserValidation";
 import { sendMail } from "@/actions/utils/sendMail";
-import { Alert } from "@/components/Alert";
+import { Alert } from "@/components/Alerts/Alert";
 import AccountActivationEmail from "@/emails/account/Activation";
 
 import classes from "./UpdateUser.module.css";

@@ -15,7 +15,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconChevronRight, IconUserPlus } from "@tabler/icons-react";
 
 import { register } from "@/actions/auth/register";
-import { Alert } from "@/components/Alert";
+import { Alert } from "@/components/Alerts/Alert";
 import { normalizeString } from "@/utils/normalizeString";
 
 import classes from "./Register.module.css";

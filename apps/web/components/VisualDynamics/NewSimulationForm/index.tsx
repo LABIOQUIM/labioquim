@@ -26,7 +26,7 @@ import { SIMULATION_TYPE } from "database";
 import { useRouter } from "next/navigation";
 
 import { submitNewSimulation } from "@/actions/simulation/submitNewSimulation";
-import { Alert } from "@/components/Alert";
+import { Alert } from "@/components/Alerts/Alert";
 import SimulationCompletedEmail from "@/emails/simulation/Completed";
 import SimulationErroredEmail from "@/emails/simulation/Errored";
 import { useAuth } from "@/hooks/auth/useAuth";

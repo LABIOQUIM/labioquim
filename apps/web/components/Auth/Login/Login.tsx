@@ -16,7 +16,7 @@ import { IconChevronRight } from "@tabler/icons-react";
 import { useSearchParams } from "next/navigation";
 
 import { login } from "@/actions/auth/login";
-import { Alert } from "@/components/Alert";
+import { Alert } from "@/components/Alerts/Alert";
 import { useReloadAuth } from "@/hooks/auth/useReloadAuth";
 import { normalizeString } from "@/utils/normalizeString";
 
