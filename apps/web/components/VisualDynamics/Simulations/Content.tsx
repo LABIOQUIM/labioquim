@@ -3,10 +3,9 @@
 import { Box, Title } from "@mantine/core";
 import { IconAlertTriangle } from "@tabler/icons-react";
 
+import { Container } from "@/components/Layout/Container";
 import { useLatestSimulations } from "@/hooks/simulation/useLatestSimulations";
 import { useSettings } from "@/hooks/utils/useSettings";
-
-import { Container } from "../Layout/Container";
 
 import { SimulationCard } from "./SimulationCard/SimulationCard";
 

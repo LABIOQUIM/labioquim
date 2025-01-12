@@ -2,7 +2,7 @@ import { Title } from "@mantine/core";
 import { SIMULATION_TYPE } from "database";
 
 import { PageLayout } from "@/components/Layout/PageLayout/PageLayout";
-import { NewSimulationForm } from "@/components/NewSimulationForm";
+import { NewSimulationForm } from "@/components/VisualDynamics/NewSimulationForm";
 
 interface Props {
   params: Promise<{

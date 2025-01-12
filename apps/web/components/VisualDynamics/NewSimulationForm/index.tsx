@@ -26,13 +26,12 @@ import { SIMULATION_TYPE } from "database";
 import { useRouter } from "next/navigation";
 
 import { submitNewSimulation } from "@/actions/simulation/submitNewSimulation";
+import { Alert } from "@/components/Alert";
 import SimulationCompletedEmail from "@/emails/simulation/Completed";
 import SimulationErroredEmail from "@/emails/simulation/Errored";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useRunningSimulation } from "@/hooks/simulation/useRunningSimulation";
 import { useSettings } from "@/hooks/utils/useSettings";
-
-import { Alert } from "../Alert";
 
 import { boxTypes } from "./data/box-types";
 import { allForceFields } from "./data/force-fields";

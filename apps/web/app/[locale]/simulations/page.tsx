@@ -1,7 +1,7 @@
 import { Title } from "@mantine/core";
 
 import { PageLayout } from "@/components/Layout/PageLayout/PageLayout";
-import { SimulationsContent } from "@/components/Simulations/Content";
+import { SimulationsContent } from "@/components/VisualDynamics/Simulations/Content";
 
 export default function Page() {
   return (
