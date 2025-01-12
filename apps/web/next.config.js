@@ -6,6 +6,9 @@ const nextConfig = {
       bodySizeLimit: "5mb",
     },
   },
+  devIndicators: {
+    appIsrStatus: false,
+  },
 };
 
 module.exports = nextConfig;

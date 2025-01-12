@@ -73,7 +73,7 @@ export function Shell({ children }: PropsWithChildren) {
         </AppShell.Navbar>
         <AppShell.Main>{children}</AppShell.Main>
       </AppShell>
-      <ReactQueryDevtools buttonPosition="top-left" />
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 }
