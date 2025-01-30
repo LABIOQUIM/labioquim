@@ -80,7 +80,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-p0516r35
 volumes:
   database:
     driver: nfsvol
