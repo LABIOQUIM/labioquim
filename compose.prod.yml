@@ -1,62 +1,49 @@
 services:
-  web:
-    build:
-      context: .
-      dockerfile: apps/ui/Dockerfile
-    image: labioquim/plasmoia-ui:prod
+  mailer:
+    image: murilofuza/simple-mail:0.0.9
     restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.plasmoia.loadbalancer.server.port=3000"
-      - "traefik.http.routers.plasmoia.rule=Host(`${UI_URL}`)"
-      - "traefik.http.routers.plasmoia.service=plasmoia"
-      - "traefik.http.routers.plasmoia.tls=true"
-      - "traefik.http.routers.plasmoia.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.plasmoia.tls.domains[0].main=${UI_URL}"
-      - "traefik.http.routers.plasmoia.entryPoints=websecure"
-    depends_on:
-      - database
+    env_file: .env
     networks:
       - traefik
-      - default
-
-  predictor:
-    build: 
-      context: ./apps/predictor
-      dockerfile: Dockerfile.dev
-    image: labioquim/plasmoia-predictor:dev
-    privileged: true
-    restart: always
-    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
-    volumes:
-      - ./apps/predictor/app:/code/app
-    networks:
-      - default
-
-  database:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: "plasmoia"
-    restart: always
-    volumes:
-      - database:/var/lib/postgresql/data
-    networks:
-      - default
+    depends_on: 
+      - redis
 
   redis:
     image: redis:alpine
     restart: always
+    networks:
+      - traefik
     volumes:
       - redis:/data
-    networks:
-      - default
 
-  mailer:
-    image: murilofuza/simple-mail:0.0.6
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
     env_file: .env
+    restart: always
     networks:
-      - default
+      - traefik
+    image: labioquim/website:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - mailer
+
+  visualdynamics:
+    build:
+      context: .
+      dockerfile: apps/visualdynamics/Dockerfile
+    env_file: .env
+    restart: always
+    networks:
+      - traefik
+    image: labioquim/visualdynamics:latest
+    ports:
+      - 3001:3000
+    depends_on:
+      - mailer
+      - redis
 
 volumes:
   database:
