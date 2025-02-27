@@ -24,10 +24,10 @@ export default function SimulationsAboutPage() {
           </Card.Section>
 
           <Group mt="md" mb="xs">
-            <Text>Visual Dynamics: Simplified MD Simulations</Text>
-            <Badge color="blue" variant="light" ml="auto">
+            <Badge color="blue" variant="light">
               Open Source
             </Badge>
+            <Text>Visual Dynamics: Simplified MD Simulations</Text>
           </Group>
 
           <Text size="sm" color="dimmed">
