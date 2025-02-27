@@ -32,8 +32,7 @@ const sections: NavSection[] = [
       {
         icon: IconReportAnalytics,
         label: "Analytics",
-        href: "#",
-        badge: { color: "indigo", message: "WIP" },
+        href: "/analytics",
       },
       {
         icon: IconListNumbers,
