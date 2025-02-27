@@ -38,8 +38,7 @@ const sections: NavSection[] = [
       {
         icon: IconListNumbers,
         label: "Tutorials",
-        href: "#",
-        badge: { color: "indigo", message: "WIP" },
+        href: "/guides",
       },
     ],
   },
