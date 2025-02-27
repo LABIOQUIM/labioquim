@@ -3,7 +3,7 @@
   gap: var(--mantine-spacing-md);
   grid-template-columns: repeat(1, 1fr);
   
-  @media (min-width: $mantine-breakpoint-md) {
+  @media (min-width: $mantine-breakpoint-lg) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
