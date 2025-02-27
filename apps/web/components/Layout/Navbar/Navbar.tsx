@@ -30,12 +30,6 @@ const sections: NavSection[] = [
       },
       { icon: IconHome, label: "Home", href: "/" },
       {
-        icon: IconInfoCircle,
-        label: "About",
-        href: "#",
-        badge: { color: "indigo", message: "WIP" },
-      },
-      {
         icon: IconReportAnalytics,
         label: "Analytics",
         href: "#",
