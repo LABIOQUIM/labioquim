@@ -1,5 +1,6 @@
 "use client";
 import { PropsWithChildren } from "react";
+import { ProgressProvider } from "@bprogress/next/app";
 import { AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -34,50 +35,57 @@ export function Shell({ children }: PropsWithChildren) {
   const [opened, { toggle }] = useDisclosure();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppShell
-        header={{ height: 60 }}
-        navbar={{
-          width: 300,
-          breakpoint: "sm",
-          collapsed: { mobile: !opened },
-        }}
-        classNames={{
-          root: classes.rootContainer,
-          main: classes.mainContainer,
-          footer: classes.footer,
-        }}
-        padding="md"
-      >
-        <AppShell.Header>
-          <Group
-            align="center"
-            justify="space-between"
-            h="100%"
-            w="100%"
-            px="md"
-          >
-            <Group flex={1}>
-              <Burger
-                opened={opened}
-                onClick={toggle}
-                hiddenFrom="sm"
-                size="sm"
-              />
-              <Logo />
+    <ProgressProvider
+      height="4px"
+      color="#fffd00"
+      options={{ showSpinner: false }}
+      shallowRouting
+    >
+      <QueryClientProvider client={queryClient}>
+        <AppShell
+          header={{ height: 60 }}
+          navbar={{
+            width: 300,
+            breakpoint: "sm",
+            collapsed: { mobile: !opened },
+          }}
+          classNames={{
+            root: classes.rootContainer,
+            main: classes.mainContainer,
+            footer: classes.footer,
+          }}
+          padding="md"
+        >
+          <AppShell.Header>
+            <Group
+              align="center"
+              justify="space-between"
+              h="100%"
+              w="100%"
+              px="md"
+            >
+              <Group flex={1}>
+                <Burger
+                  opened={opened}
+                  onClick={toggle}
+                  hiddenFrom="sm"
+                  size="sm"
+                />
+                <Logo />
+              </Group>
+              <Group>
+                <SystemsStatus />
+                <ServerTime />
+              </Group>
             </Group>
-            <Group>
-              <SystemsStatus />
-              <ServerTime />
-            </Group>
-          </Group>
-        </AppShell.Header>
-        <AppShell.Navbar px="md">
-          <Navbar toggle={toggle} />
-        </AppShell.Navbar>
-        <AppShell.Main>{children}</AppShell.Main>
-      </AppShell>
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+          </AppShell.Header>
+          <AppShell.Navbar px="md">
+            <Navbar toggle={toggle} />
+          </AppShell.Navbar>
+          <AppShell.Main>{children}</AppShell.Main>
+        </AppShell>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </ProgressProvider>
   );
 }
