@@ -4,6 +4,7 @@ import { Box, Title } from "@mantine/core";
 import { IconAlertTriangle } from "@tabler/icons-react";
 
 import { Container } from "@/components/Layout/Container";
+import { Loader } from "@/components/Loader/Loader";
 import { useLatestSimulations } from "@/hooks/simulation/useLatestSimulations";
 import { useSettings } from "@/hooks/utils/useSettings";
 
@@ -44,7 +45,11 @@ export function SimulationsContent() {
   }
 
   if (isLoading) {
-    return <Container className={classes.container}>loading</Container>;
+    return (
+      <Container className={classes.containerDownOrMaintenance}>
+        <Loader />
+      </Container>
+    );
   }
 
   if (!data) {
