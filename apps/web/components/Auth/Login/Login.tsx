@@ -133,18 +133,22 @@ export function Login() {
           {status && status.status !== "loading" && <Alert status={status} />}
           <TextInput
             data-autofocus
+            disabled={status?.status === "loading"}
             label="Username"
             withAsterisk
             {...getInputProps("userName")}
           />
           <TextInput
+            disabled={status?.status === "loading"}
             label="Password"
             withAsterisk
             type="password"
             {...getInputProps("password")}
           />
 
-          <Button type="submit">Login</Button>
+          <Button loading={status?.status === "loading"} type="submit">
+            Login
+          </Button>
         </Box>
       </Modal>
 
