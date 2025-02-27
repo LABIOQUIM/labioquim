@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { ActionIcon, Avatar, Box, Group, Text } from "@mantine/core";
 import { IconLogout } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
 import { invalidateAuth } from "@/actions/auth/invalidateAuth";
 import { useAuth } from "@/hooks/auth/useAuth";
@@ -11,12 +12,13 @@ import classes from "./User.module.css";
 export function User() {
   const { data } = useAuth();
   const reload = useReloadAuth();
+  const router = useRouter();
 
   const onLogout = useCallback(() => {
     invalidateAuth().then(() => {
-      reload();
+      reload().then(() => router.push("/"));
     });
-  }, [reload]);
+  }, [reload, router]);
 
   if (!data || !data.session || !data.user) {
     return null;
