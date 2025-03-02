@@ -53,7 +53,7 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
     }
     writeFileSync(runningFilePath, job.data.type);
   } catch {
-    onError(job, new Error("Failed to Setup!"));
+    await onError(job, new Error("Failed to Setup!"));
     cb(new Error(`${job.data.simulationId} failed to setup!`));
   }
 
@@ -76,7 +76,7 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
     writeFileSync(fileStepPath, "");
     await executeCommands(commands, fileStepPath, fileLogPath);
   } catch (e) {
-    onError(job, new Error(e?.message));
+    await onError(job, new Error(e?.message));
     cb(new Error(`${job.data.simulationId} failed to run command!`));
   }
 
@@ -110,7 +110,7 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
       html: job.data.successEmail,
     });
   } catch {
-    onError(job, new Error("Failed on post-steps"));
+    await onError(job, new Error("Failed on post-steps"));
     cb(new Error(`${job.data.simulationId} failed on post-steps!`));
   }
 
