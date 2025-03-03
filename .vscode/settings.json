@@ -18,5 +18,23 @@
     "**/*.less",
     "node_modules/@mantine/core/styles.css"
   ],
-  "python.languageServer": "Jedi"
+  "python.languageServer": "Jedi",
+  "github.copilot.editor.enableAutoCompletions": false,
+  "github.copilot.renameSuggestions.triggerAutomatically": false,
+  "github.copilot.editor.enableCodeActions": false,
+  "github.copilot.chat.codeGeneration.useInstructionFiles": false,
+  "github.copilot.chat.edits.suggestRelatedFilesForTests": false,
+  "github.copilot.chat.edits.suggestRelatedFilesFromGitHistory": false,
+  "github.copilot.chat.fixTestFailure.enabled": false,
+  "github.copilot.chat.useProjectTemplates": false,
+  "github.copilot.chat.reviewSelection.enabled": false,
+  "github.copilot.chat.startDebugging.enabled": false,
+  "github.copilot.chat.setupTests.enabled": false,
+  "chat.commandCenter.enabled": false,
+  "github.copilot.chat.copilotDebugCommand.enabled": false,
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+      {
+          "text": "use conventional commits and always include a scope, remember, not everything is a feature and in en-us"
+      }
+  ],
 }
