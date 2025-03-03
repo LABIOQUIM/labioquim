@@ -315,12 +315,12 @@ export class SimulationService {
     const runningFilePath = `${userFolderPath}/running`;
     const queuedFilePath = `${userFolderPath}/queued`;
 
-    if (!existsSync(runningFilePath)) {
-      return "not-running";
-    }
-
     if (existsSync(queuedFilePath)) {
       return "queued";
+    }
+
+    if (!existsSync(runningFilePath)) {
+      return "not-running";
     }
 
     const simulationType = readFileSync(runningFilePath, {
