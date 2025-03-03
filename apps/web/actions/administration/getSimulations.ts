@@ -30,6 +30,15 @@ export async function getSimulations(
         ],
       },
     },
+    include: {
+      user: {
+        select: {
+          userName: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
     take,
     skip: (page - 1) * take || 0,
     orderBy: {
