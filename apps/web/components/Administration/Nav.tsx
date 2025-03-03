@@ -42,6 +42,11 @@ const nav: NavSection[] = [
         label: "Status",
       },
       {
+        href: "/administration/visualdynamics/manage",
+        icon: IconReportAnalytics,
+        label: "Manage",
+      },
+      {
         href: "/administration/visualdynamics/settings",
         icon: IconSettings2,
         label: "Settings",

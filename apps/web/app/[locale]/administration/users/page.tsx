@@ -4,8 +4,7 @@ import { AdministrationUserList } from "@/components/Administration/Users/UserLi
 import { AdministrationUserListPagination } from "@/components/Administration/Users/UserListPagination";
 import { AdministrationUserListSearch } from "@/components/Administration/Users/UserListSearch";
 import { PageLayout } from "@/components/Layout/PageLayout/PageLayout";
-
-import { UserAdminProvider } from "./UserAdmin";
+import { PaginationProvider } from "@/providers/Pagination";
 
 import classes from "./page.module.css";
 
@@ -14,11 +13,11 @@ export default function Page() {
     <PageLayout>
       <Title order={2}>Administration: Users</Title>
       <Box className={classes.container}>
-        <UserAdminProvider>
+        <PaginationProvider>
           <AdministrationUserListSearch />
           <AdministrationUserList />
           <AdministrationUserListPagination />
-        </UserAdminProvider>
+        </PaginationProvider>
       </Box>
     </PageLayout>
   );

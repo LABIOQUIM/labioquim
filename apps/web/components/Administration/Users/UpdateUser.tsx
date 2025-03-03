@@ -14,9 +14,9 @@ import { IconCancel, IconCheck, IconUserEdit } from "@tabler/icons-react";
 import { Prisma, User } from "database";
 
 import { updateUser } from "@/actions/administration/updateUser";
-import { useUserAdmin } from "@/app/[locale]/administration/users/UserAdmin";
 import { Alert } from "@/components/Alerts/Alert";
 import { useUsers } from "@/hooks/administration/useUsers";
+import { usePagination } from "@/providers/Pagination";
 
 import classes from "./UpdateUser.module.css";
 
@@ -34,8 +34,7 @@ export function UpdateUser({ user }: Props) {
       role: user.role,
     },
   });
-  const { queryText } = useUserAdmin();
-  const { take, page } = useUserAdmin();
+  const { queryText, take, page } = usePagination();
   const { refetch: refetchUsers } = useUsers(queryText, take, page);
   const [opened, { open, close }] = useDisclosure(false);
   const [status, setStatus] = useState<FormSubmissionStatus>();

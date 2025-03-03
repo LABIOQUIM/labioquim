@@ -1,13 +1,13 @@
 "use client";
 import { Box, Pagination, Text } from "@mantine/core";
 
-import { useUserAdmin } from "@/app/[locale]/administration/users/UserAdmin";
 import { useUserCount } from "@/hooks/administration/useUserCount";
+import { usePagination } from "@/providers/Pagination";
 
 import classes from "./UserListPagination.module.css";
 
 export function AdministrationUserListPagination() {
-  const { take, page, updatePage, queryText } = useUserAdmin();
+  const { take, page, setPage, queryText } = usePagination();
   const { data } = useUserCount(queryText);
 
   const userCount =
@@ -25,7 +25,7 @@ export function AdministrationUserListPagination() {
         value={page}
         total={Math.ceil(userCount / take)}
         boundaries={1}
-        onChange={updatePage}
+        onChange={setPage}
       />
     </Box>
   );

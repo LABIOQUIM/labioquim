@@ -2,9 +2,9 @@
 import { ReactNode } from "react";
 import { Box, Table } from "@mantine/core";
 
-import { useUserAdmin } from "@/app/[locale]/administration/users/UserAdmin";
 import { Loader } from "@/components/Loader/Loader";
 import { useUsers } from "@/hooks/administration/useUsers";
+import { usePagination } from "@/providers/Pagination";
 import { dateFormat } from "@/utils/dateFormat";
 
 import { BanUser } from "./BanUser";
@@ -14,7 +14,7 @@ import { UpdateUser } from "./UpdateUser";
 import classes from "./UserList.module.css";
 
 export function AdministrationUserList() {
-  const { page, take, queryText } = useUserAdmin();
+  const { page, take, queryText } = usePagination();
   const { data } = useUsers(queryText, take, page);
 
   if (!data || data === "unauthenticated" || data === "unauthorized") {
