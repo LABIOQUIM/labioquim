@@ -1,0 +1,13 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+  min-height: 32px;
+
+  @mixin larger-than $mantine-breakpoint-lg {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
