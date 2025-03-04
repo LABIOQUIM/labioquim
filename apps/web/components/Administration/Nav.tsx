@@ -1,6 +1,7 @@
 "use client";
 import { Box } from "@mantine/core";
 import {
+  IconLayoutList,
   IconReportAnalytics,
   IconServer,
   IconSettings2,
@@ -43,7 +44,7 @@ const nav: NavSection[] = [
       },
       {
         href: "/administration/visualdynamics/manage",
-        icon: IconReportAnalytics,
+        icon: IconLayoutList,
         label: "Manage",
       },
       {
