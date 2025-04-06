@@ -1,7 +1,17 @@
 "use client";
-import { Badge, Box, Card, Group, List, Text, Title } from "@mantine/core";
+import {
+  Badge,
+  Box,
+  Card,
+  Group,
+  List,
+  ListItem,
+  Text,
+  Title,
+} from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import VDBg from "@/assets/visualdynamics.png";
 import { PageLayout } from "@/components/Layout/PageLayout/PageLayout";
@@ -68,6 +78,33 @@ export default function SimulationsAboutPage() {
             source, it encourages community contributions and fosters a
             collaborative environment for advancing MD research and education.
           </Text>
+          <Title order={2}>Papers</Title>
+          <List type="ordered">
+            <ListItem>
+              <Text className={classes.listItem}>
+                Vieira, I.H.P., Botelho, E.B., de Souza Gomes, T.J. et al.
+                Visual dynamics: a WEB application for molecular dynamics
+                simulation using GROMACS. BMC Bioinformatics 24, 107 (2023).{" "}
+                <Link
+                  href="https://doi.org/10.1186/s12859-023-05234-y"
+                  target="_blank"
+                >
+                  https://doi.org/10.1186/s12859-023-05234-y
+                </Link>
+              </Text>
+            </ListItem>
+            <ListItem>
+              <Text className={classes.listItem}>
+                Henrique Provensi Vieira, I., Mendonça, E. A. M., Guariero, F.
+                L., Guimarães, R. M. d. S., Zanchi, F. B. New Features in Visual
+                Dynamics 3.0. J. Vis. Exp. (210), e66964, doi:{" "}
+                <Link href="https://doi.org/10.3791/66964" target="_blank">
+                  10.3791/66964
+                </Link>{" "}
+                (2024).
+              </Text>
+            </ListItem>
+          </List>
         </Box>
       </Box>
     </PageLayout>

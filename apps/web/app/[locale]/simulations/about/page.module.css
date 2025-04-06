@@ -19,3 +19,9 @@
   height: auto;
   width: 100%;
 }
+
+.listItem {
+  width: calc(100% - 21px);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
