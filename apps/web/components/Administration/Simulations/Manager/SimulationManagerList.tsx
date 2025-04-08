@@ -36,7 +36,6 @@ export function SimulationManagerList() {
       <Table
         highlightOnHover
         striped
-        stickyHeader
         classNames={{
           table: classes.table,
           tbody: classes.table,
@@ -44,10 +43,14 @@ export function SimulationManagerList() {
         }}
         verticalSpacing="xs"
         withRowBorders
+        withTableBorder
       >
         <Table.Thead>
           <Table.Tr>
             <Th>User</Th>
+            <Th>Molecule name</Th>
+            <Th>Ligand ITP name</Th>
+            <Th>Ligand PDB name</Th>
             <Th>Type</Th>
             <Th>Status</Th>
             <Th>Started at</Th>
@@ -56,23 +59,33 @@ export function SimulationManagerList() {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {data.map((item) => (
-            <Table.Tr key={item.id}>
-              <Td>
-                {item.user.userName} ({item.user.firstName} {item.user.lastName}
-                )
-              </Td>
-              <Td>{item.type.toLocaleUpperCase()}</Td>
-              <Td>
-                <Text className={classes[item.status.toLocaleLowerCase()]}>
-                  {item.status}
-                </Text>
-              </Td>
-              <Td>{dateFormat(item.startedAt)}</Td>
-              <Td>{dateFormat(item.endedAt)}</Td>
-              <Td>{dateFormat(item.createdAt)}</Td>
-            </Table.Tr>
-          ))}
+          {data.map((item) => {
+            let name = item.user.firstName;
+
+            if (item.user.lastName) {
+              name += ` ${item.user.lastName}`;
+            }
+
+            return (
+              <Table.Tr key={item.id}>
+                <Td>
+                  {item.user.userName} ({name})
+                </Td>
+                <Td>{item.moleculeName}</Td>
+                <Td>{item.ligandITPName}</Td>
+                <Td>{item.ligandPDBName}</Td>
+                <Td>{item.type.toLocaleUpperCase()}</Td>
+                <Td>
+                  <Text className={classes[item.status.toLocaleLowerCase()]}>
+                    {item.status}
+                  </Text>
+                </Td>
+                <Td>{dateFormat(item.startedAt)}</Td>
+                <Td>{dateFormat(item.endedAt)}</Td>
+                <Td>{dateFormat(item.createdAt)}</Td>
+              </Table.Tr>
+            );
+          })}
         </Table.Tbody>
       </Table>
     </Box>
