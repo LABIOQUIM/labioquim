@@ -64,7 +64,5 @@ export async function getSimulations(
     },
   });
 
-  console.log(simulations);
-
   return simulations;
 }
