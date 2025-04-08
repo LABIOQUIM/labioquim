@@ -32,10 +32,17 @@ export function usePagination() {
   return useContext(Context);
 }
 
-export function PaginationProvider({ children }: PropsWithChildren) {
+interface ProviderProps {
+  defaultTake?: number;
+}
+
+export function PaginationProvider({
+  children,
+  defaultTake = 10,
+}: PropsWithChildren<ProviderProps>) {
   const [queryText, setQueryText] = useState("");
   const [page, setPage] = useState(1);
-  const [take, setTake] = useState(10);
+  const [take, setTake] = useState(defaultTake);
 
   const value = useMemo(
     () => ({
