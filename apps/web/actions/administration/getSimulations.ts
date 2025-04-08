@@ -1,5 +1,4 @@
 "use server";
-
 import { prisma } from "database";
 
 import { validateAuth } from "../auth/validateAuth";
@@ -21,16 +20,35 @@ export async function getSimulations(
 
   const simulations = await prisma.simulation.findMany({
     where: {
-      user: {
-        OR: [
-          { email: { contains: queryText, mode: "insensitive" } },
-          { firstName: { contains: queryText, mode: "insensitive" } },
-          { lastName: { contains: queryText, mode: "insensitive" } },
-          { userName: { contains: queryText, mode: "insensitive" } },
-        ],
-      },
+      OR: [
+        { moleculeName: { contains: queryText, mode: "insensitive" } },
+        { ligandITPName: { contains: queryText, mode: "insensitive" } },
+        { ligandPDBName: { contains: queryText, mode: "insensitive" } },
+        { errorCause: { contains: queryText, mode: "insensitive" } },
+        {
+          user: {
+            OR: [
+              { email: { contains: queryText, mode: "insensitive" } },
+              { firstName: { contains: queryText, mode: "insensitive" } },
+              { lastName: { contains: queryText, mode: "insensitive" } },
+              { userName: { contains: queryText, mode: "insensitive" } },
+            ],
+          },
+        },
+      ],
     },
-    include: {
+    select: {
+      id: true,
+      createdAt: true,
+      endedAt: true,
+      errorCause: true,
+      ligandITPName: true,
+      ligandPDBName: true,
+      moleculeName: true,
+      startedAt: true,
+      status: true,
+      type: true,
+      userId: true,
       user: {
         select: {
           userName: true,
@@ -45,6 +63,8 @@ export async function getSimulations(
       createdAt: "desc",
     },
   });
+
+  console.log(simulations);
 
   return simulations;
 }
