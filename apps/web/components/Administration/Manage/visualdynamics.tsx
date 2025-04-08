@@ -8,7 +8,7 @@ import { SimulationManagerSearchBox } from "../Simulations/Manager/SimulationMan
 
 export default function Manage() {
   return (
-    <PaginationProvider>
+    <PaginationProvider defaultTake={12}>
       <SimulationManagerSearchBox />
       <SimulationManagerList />
       <SimulationManagerPagination />
