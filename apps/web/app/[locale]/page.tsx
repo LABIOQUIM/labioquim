@@ -4,7 +4,11 @@ import {
   IconChartDots,
   IconMicroscope,
 } from "@tabler/icons-react";
+import Image from "next/image";
 
+import FIOCRUZROLogo from "@/assets/fiocruz-ro-white.png";
+import FIOCRUZLogo from "@/assets/fiocruz-white.png";
+import LABIOQUIMLogo from "@/assets/logo_transparent.svg";
 import { PageLayout } from "@/components/Layout/PageLayout/PageLayout";
 import { Logo } from "@/components/Logo";
 
@@ -29,6 +33,25 @@ const applications = [
       "AI-powered platform for detecting Plasmodium Vivax in images of malaria laboratorial exams.",
     icon: IconMicroscope,
   },
+];
+
+const backing = [
+  {
+    title: "LABIOQUIM",
+    logo: LABIOQUIMLogo,
+  },
+  {
+    title: "FIOCRUZ",
+    logo: FIOCRUZLogo,
+  },
+  {
+    title: "FIOCRUZ RO",
+    logo: FIOCRUZROLogo,
+  },
+  // {
+  //   title: "UFCSPA",
+  //   logo: UFCSPALogo,
+  // },
 ];
 
 export default async function HomePage() {
@@ -61,6 +84,21 @@ export default async function HomePage() {
               {app.description}
             </Text>
           </Card>
+        ))}
+      </SimpleGrid>
+
+      <Title order={2} ta="center" mb="sm">
+        Backing
+      </Title>
+
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4 }} spacing="lg">
+        {backing.map((backer) => (
+          <Image
+            alt={backer.title}
+            className={classes.backerImage}
+            key={backer.title}
+            src={backer.logo}
+          />
         ))}
       </SimpleGrid>
     </PageLayout>
