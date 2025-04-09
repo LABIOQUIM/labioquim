@@ -3,13 +3,13 @@ services:
     image: murilofuza/simple-mail:0.0.9
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=Host(`visualdynamics.fiocruz.br`) && PathPrefix(`/dashboard`)"
-      - "traefik.http.routers.web.service=web"
-      - "traefik.http.services.web.loadbalancer.server.port=3000"
-      - "traefik.http.routers.web.tls=true"
-      - "traefik.http.routers.web.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.web.tls.domains[0].main=visualdynamics.fiocruz.br"
-      - "traefik.http.routers.web.entryPoints=websecure"
+      - "traefik.http.routers.mailer.rule=Host(`visualdynamics.fiocruz.br`) && PathPrefix(`/dashboard`)"
+      - "traefik.http.routers.mailer.service=mailer"
+      - "traefik.http.services.mailer.loadbalancer.server.port=3000"
+      - "traefik.http.routers.mailer.tls=true"
+      - "traefik.http.routers.mailer.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.mailer.tls.domains[0].main=visualdynamics.fiocruz.br"
+      - "traefik.http.routers.mailer.entryPoints=websecure"
     restart: always
     env_file: .env
     networks:
