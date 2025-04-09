@@ -6,10 +6,10 @@ RUN apt update && apt install procps openssl curl tar cmake gcc g++ grace zip -y
 
 WORKDIR /gromacsbuild
 
-RUN curl -O https://ftp.gromacs.org/gromacs/gromacs-2024.5.tar.gz
-RUN tar xfz gromacs-2024.5.tar.gz
-RUN cd gromacs-2024.5 && mkdir build
-WORKDIR /gromacsbuild/gromacs-2024.5/build
+RUN curl -O https://ftp.gromacs.org/gromacs/gromacs-2025.1.tar.gz
+RUN tar xfz gromacs-2025.1.tar.gz
+RUN cd gromacs-2025.1 && mkdir build
+WORKDIR /gromacsbuild/gromacs-2025.1/build
 RUN cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=on
 RUN make -j4
 RUN make install
