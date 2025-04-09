@@ -1,6 +1,5 @@
 "use server";
 import { argon2id, hash } from "argon2";
-import axios from "axios";
 import { prisma } from "database";
 
 import { normalizeString } from "@/utils/normalizeString";
@@ -15,29 +14,7 @@ export async function register(data: RegisterFormInputs) {
       data,
     });
 
-    const userActivation = await prisma.userEmailValidation.create({
-      data: {
-        user: {
-          connect: {
-            id: user.id,
-          },
-        },
-      },
-    });
-
-    await axios.post("http://mailer:3000/send-email", {
-      from: `LABIOQUIM <${process.env.SMTP_USER}>`,
-      to: data.email,
-      subject: "[LABIOQUIM] Your registration",
-      template: "account-activation.hbs",
-      context: {
-        name: data.firstName,
-        username: data.userName,
-        activationURL: `${process.env.APP_URL}/account/email-validation/${userActivation.id}`,
-      },
-    });
-
-    return "success";
+    return user;
   } catch (e: any) {
     if (e && e.code && e.code === "P2002") {
       return "existing-user";

@@ -12,10 +12,14 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { render } from "@react-email/components";
 import { IconChevronRight, IconUserPlus } from "@tabler/icons-react";
 
+import { createUserValidation } from "@/actions/administration/createUserValidation";
 import { register } from "@/actions/auth/register";
+import { sendMail } from "@/actions/utils/sendMail";
 import { Alert } from "@/components/Alerts/Alert";
+import AccountActivationEmail from "@/emails/account/Activation";
 import { normalizeString } from "@/utils/normalizeString";
 
 import classes from "./Register.module.css";
@@ -56,7 +60,7 @@ export function Register(props: Props): ReactElement {
 
   async function doRegister(data: RegisterFormInputs) {
     setStatus({ status: "loading" });
-    register(data).then((res) => {
+    register(data).then(async (res) => {
       if (res === "existing-user") {
         setStatus({
           status: "error",
@@ -70,11 +74,50 @@ export function Register(props: Props): ReactElement {
             "Oops! Something went wrong. Please report it to the administrators.",
         });
       } else {
-        setStatus({
-          status: "success",
-          title: "Your account has been created.",
-          message: "You just need to confirm your account via email now.",
-        });
+        const validationId = await createUserValidation(res.id);
+
+        if (
+          !validationId ||
+          validationId === "failure" ||
+          validationId === "unauthenticated" ||
+          validationId === "unauthorized"
+        ) {
+          setStatus({
+            status: "warning",
+            title: `Something went wrong and an email couldn't be sent to you.`,
+            message:
+              "Send an email to visualdynamics@fiocruz.br detailing this to proceed.",
+          });
+          return;
+        }
+
+        const html = await render(
+          <AccountActivationEmail
+            email={res.email}
+            firstName={res.firstName}
+            validationURL={`${window.location.protocol}//${window.location.host}/account/email-validation/${validationId}`}
+          />
+        );
+
+        const result = await sendMail(
+          res.email,
+          html,
+          "[LABIOQUIM] Your account activation link."
+        );
+        if (result !== "success") {
+          setStatus({
+            status: "warning",
+            title: `Something went wrong and an email couldn't be sent to you.`,
+            message:
+              "Send an email to visualdynamics@fiocruz.br detailing this to proceed.",
+          });
+        } else {
+          setStatus({
+            status: "success",
+            title: "Your account has been created.",
+            message: "You just need to confirm your account via email now.",
+          });
+        }
       }
     });
   }
