@@ -22,12 +22,12 @@ services:
       dockerfile: apps/web/Dockerfile
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=Host(`labioquim.soldrake.net`)"
+      - "traefik.http.routers.web.rule=Host(`visualdynamics.fiocruz.br`)"
       - "traefik.http.routers.web.service=web"
       - "traefik.http.services.web.loadbalancer.server.port=3000"
       - "traefik.http.routers.web.tls=true"
       - "traefik.http.routers.web.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.web.tls.domains[0].main=labioquim.soldrake.net"
+      - "traefik.http.routers.web.tls.domains[0].main=visualdynamics.fiocruz.br"
       - "traefik.http.routers.web.entryPoints=websecure"
     env_file: .env
     restart: always
@@ -60,7 +60,7 @@ services:
       - "--providers.docker.network=traefik"
       - "--providers.docker.exposedByDefault=false"
 
-      - "--certificatesresolvers.letsencrypt.acme.email=ivoprovensi1@gmail.com"  # replace with your email
+      - "--certificatesresolvers.letsencrypt.acme.email=labioquim@fiocruz.br"  # replace with your email
       - "--certificatesresolvers.letsencrypt.acme.storage=acme/acme.json"
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
@@ -80,6 +80,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
 volumes:
   database:
     driver: nfsvol
