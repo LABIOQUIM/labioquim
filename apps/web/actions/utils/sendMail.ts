@@ -12,7 +12,7 @@ export async function sendMail(to: string, html: string, subject: string) {
 
     return "success";
   } catch (e) {
-    console.log(e);
+    console.log("sentMail: " + e);
     return "failure";
   }
 }

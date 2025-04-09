@@ -15,7 +15,7 @@ export async function getAllSettings() {
 
     return settings;
   } catch (e) {
-    console.log(e);
+    console.log("getAllSettings: " + e);
     return "error";
   }
 }

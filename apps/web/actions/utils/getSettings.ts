@@ -28,7 +28,7 @@ export async function getSettings(systemId: string) {
 
     return settings;
   } catch (e) {
-    console.log(e);
+    console.log("getSettings: " + e);
     return "error";
   }
 }

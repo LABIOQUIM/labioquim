@@ -43,7 +43,7 @@ export async function register(data: RegisterFormInputs) {
       return "existing-user";
     }
 
-    console.log(e);
+    console.log("Register: " + e);
 
     return "unknown-error";
   }
