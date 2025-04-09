@@ -11,7 +11,5 @@ export default async function AccountActivationPage({ params }: Props) {
 
   const validation = await fetchEmailValidation(activationId);
 
-  console.log(validation);
-
   return null;
 }

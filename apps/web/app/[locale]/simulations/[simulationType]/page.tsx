@@ -13,9 +13,14 @@ interface Props {
 export default async function NewSimulationPage({ params }: Props) {
   const { simulationType } = await params;
 
+  const titles: { [key in SIMULATION_TYPE]: string } = {
+    acpype: "Protein + Ligand (prepared in ACPYPE)",
+    apo: "APO",
+  };
+
   return (
     <PageLayout>
-      <Title>New {simulationType.toUpperCase()} Simulation</Title>
+      <Title>New {titles[simulationType]} Simulation</Title>
       <NewSimulationForm simulationType={simulationType} />
     </PageLayout>
   );
