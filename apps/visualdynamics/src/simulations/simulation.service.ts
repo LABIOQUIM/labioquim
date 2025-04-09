@@ -371,7 +371,7 @@ export class SimulationService {
   }
 
   async getUserLastSimulations(userName: string) {
-    let simulations: { [key: string]: Simulation } = {};
+    let simulations: { [key: string]: Omit<Simulation, "updatedAt"> } = {};
 
     for (const type of ["acpype", "apo"] satisfies SIMULATION_TYPE[]) {
       const data = await this.prisma.simulation.findFirst({
@@ -380,6 +380,19 @@ export class SimulationService {
             userName,
           },
           type,
+        },
+        select: {
+          createdAt: true,
+          endedAt: true,
+          errorCause: true,
+          id: true,
+          ligandITPName: true,
+          ligandPDBName: true,
+          moleculeName: true,
+          startedAt: true,
+          status: true,
+          type: true,
+          userId: true,
         },
         orderBy: {
           createdAt: "desc",
