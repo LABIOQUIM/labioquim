@@ -26,8 +26,6 @@ export async function login(userName: string, password: string) {
       },
     });
 
-    console.log(user);
-
     if (!user) {
       return "invalid-credentials";
     }
@@ -50,7 +48,7 @@ export async function login(userName: string, password: string) {
 
     return "authenticated";
   } catch (e) {
-    console.log(e);
+    console.log("Login: " + e);
 
     return "unknown-error";
   }
