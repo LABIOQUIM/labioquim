@@ -22,11 +22,9 @@ export function ResendValidationEmail({ user }: Props) {
   const [status, setStatus] = useState<FormSubmissionStatus>();
 
   async function doResend() {
+    console.log("Resending");
     setStatus({ status: "loading" });
-    console.log(user);
     const validationId = await createUserValidation(user.id);
-
-    console.log(validationId);
 
     if (
       !validationId ||
@@ -34,6 +32,7 @@ export function ResendValidationEmail({ user }: Props) {
       validationId === "unauthenticated" ||
       validationId === "unauthorized"
     ) {
+      console.log("resendValidationMail: failed to generate validationId");
       return;
     }
 
@@ -59,7 +58,7 @@ export function ResendValidationEmail({ user }: Props) {
     } else {
       setStatus({
         status: "success",
-        title: `User ${user.userName} updated.`,
+        title: `Sent ${user.userName} a new validation email.`,
       });
     }
   }
