@@ -10,10 +10,6 @@ export async function createUserValidation(userId: string) {
     return "unauthenticated";
   }
 
-  if (user.role !== "ADMINISTRATOR") {
-    return "unauthorized";
-  }
-
   try {
     await prisma.userEmailValidation.delete({
       where: {
