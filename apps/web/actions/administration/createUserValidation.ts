@@ -3,11 +3,19 @@ import { prisma } from "database";
 
 export async function createUserValidation(userId: string) {
   try {
-    await prisma.userEmailValidation.delete({
+    const existingValidation = await prisma.userEmailValidation.findFirst({
       where: {
         userId,
       },
     });
+
+    if (existingValidation) {
+      await prisma.userEmailValidation.delete({
+        where: {
+          userId,
+        },
+      });
+    }
 
     const newValidation = await prisma.userEmailValidation.create({
       data: {
