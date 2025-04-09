@@ -46,56 +46,56 @@ const sections: NavSection[] = [
     links: [
       { icon: IconInfoCircle, label: "About", href: "/simulations/about" },
       { icon: IconInfoCircle, label: "My Submissions", href: "/simulations" },
-      { icon: IconPlus, label: "New ACPYPE", href: "/simulations/acpype" },
       { icon: IconPlus, label: "New APO", href: "/simulations/apo" },
+      {
+        icon: IconPlus,
+        label: "New Protein + Ligand",
+        href: "/simulations/acpype",
+      },
     ],
   },
   {
     title: "PlasmoQSAR",
-    disabled: true,
     links: [
       {
         icon: IconInfoCircle,
         label: "About",
-        href: "/qsar/about",
-        badge: { color: "indigo", message: "WIP" },
+        href: "https://www.qsar.labioquim.fiocruz.br/",
       },
-      {
-        icon: IconInfoCircle,
-        label: "My Submissions",
-        href: "/qsar",
-        badge: { color: "indigo", message: "WIP" },
-      },
-      {
-        icon: IconPlus,
-        label: "New SDF",
-        href: "/qsar/sdf",
-        badge: { color: "indigo", message: "WIP" },
-      },
+      // {
+      //   icon: IconInfoCircle,
+      //   label: "My Submissions",
+      //   href: "/qsar",
+      //   badge: { color: "indigo", message: "WIP" },
+      // },
+      // {
+      //   icon: IconPlus,
+      //   label: "New SDF",
+      //   href: "/qsar/sdf",
+      //   badge: { color: "indigo", message: "WIP" },
+      // },
     ],
   },
   {
     title: "PlasmoIA",
-    disabled: true,
     links: [
       {
         icon: IconInfoCircle,
         label: "About",
-        href: "/ia/about",
-        badge: { color: "indigo", message: "WIP" },
+        href: "https://www.plasmoia.labioquim.fiocruz.br/",
       },
-      {
-        icon: IconInfoCircle,
-        label: "My Submissions",
-        href: "/ia",
-        badge: { color: "indigo", message: "WIP" },
-      },
-      {
-        icon: IconPlus,
-        label: "New Image",
-        href: "/ia/image",
-        badge: { color: "indigo", message: "WIP" },
-      },
+      // {
+      //   icon: IconInfoCircle,
+      //   label: "My Submissions",
+      //   href: "/ia",
+      //   badge: { color: "indigo", message: "WIP" },
+      // },
+      // {
+      //   icon: IconPlus,
+      //   label: "New Image",
+      //   href: "/ia/image",
+      //   badge: { color: "indigo", message: "WIP" },
+      // },
     ],
   },
 ];

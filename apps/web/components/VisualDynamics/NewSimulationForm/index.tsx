@@ -246,9 +246,9 @@ export function NewSimulationForm({ simulationType }: Props) {
     >
       <FileInput
         disabled={isLoading}
-        label="Molecule (.pdb)"
+        label="Macromolecule (.pdb)"
         leftSection={<IconFileUpload />}
-        placeholder="Click to select your molecule PDB file"
+        placeholder="Click to select your PDB file"
         size="lg"
         accept=".pdb,.PDB"
         {...getInputProps("filePDB")}
