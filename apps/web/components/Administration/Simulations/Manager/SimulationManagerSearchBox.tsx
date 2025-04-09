@@ -25,7 +25,11 @@ export function SimulationManagerSearchBox() {
         value={tempQuery}
         onChange={(e) => setTempQuery(e.target.value)}
       />
-      <Button className={classes.button} leftSection={<IconSearch />}>
+      <Button
+        className={classes.button}
+        leftSection={<IconSearch />}
+        type="submit"
+      >
         Search
       </Button>
     </Box>
