@@ -15,13 +15,9 @@ export async function createUserValidation(userId: string) {
   }
 
   try {
-    await prisma.userEmailValidation.updateMany({
+    await prisma.userEmailValidation.delete({
       where: {
         userId,
-        valid: true,
-      },
-      data: {
-        valid: false,
       },
     });
 
@@ -36,7 +32,8 @@ export async function createUserValidation(userId: string) {
     });
 
     return newValidation.id;
-  } catch {
+  } catch (e) {
+    console.log("createUserValidation: " + e);
     return "failure";
   }
 }
