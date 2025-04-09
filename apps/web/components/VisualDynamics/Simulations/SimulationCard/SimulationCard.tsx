@@ -50,6 +50,11 @@ export function SimulationCard({ simulation, type }: Props) {
     [classes.completed_border]: simulation?.status === "COMPLETED",
   });
 
+  const title = {
+    apo: "APO",
+    acpype: "Protein + Ligand (prepared in ACPYPE)",
+  };
+
   return (
     <Card
       component={simulation?.status === "RUNNING" ? Link : undefined}
@@ -58,7 +63,7 @@ export function SimulationCard({ simulation, type }: Props) {
       withBorder
     >
       <Card.Section className={border} withBorder>
-        <Title className={classes.title}>{type}</Title>
+        <Title className={classes.title}>{title[type]}</Title>
       </Card.Section>
       {simulation ? (
         <Fragment>
