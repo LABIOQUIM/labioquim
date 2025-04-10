@@ -1,9 +1,14 @@
 "use server";
-import { prisma } from "database";
+import { prisma, USER_STATUS } from "database";
 
 import { validateAuth } from "../auth/validateAuth";
 
-export async function getUsers(queryText: string, take: number, page: number) {
+export async function getUsers(
+  queryText: string,
+  take: number,
+  page: number,
+  queryStatus?: USER_STATUS
+) {
   const { user } = await validateAuth();
 
   if (!user) {
@@ -22,6 +27,7 @@ export async function getUsers(queryText: string, take: number, page: number) {
         { lastName: { contains: queryText, mode: "insensitive" } },
         { userName: { contains: queryText, mode: "insensitive" } },
       ],
+      ...(queryStatus ? { status: queryStatus } : {}),
     },
     take,
     skip: (page - 1) * take || 0,
