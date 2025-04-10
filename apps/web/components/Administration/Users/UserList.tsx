@@ -1,6 +1,7 @@
 "use client";
 import { ReactNode } from "react";
 import { Box, Table } from "@mantine/core";
+import { USER_STATUS } from "database";
 
 import { Loader } from "@/components/Loader/Loader";
 import { useUsers } from "@/hooks/administration/useUsers";
@@ -14,8 +15,8 @@ import { UpdateUser } from "./UpdateUser";
 import classes from "./UserList.module.css";
 
 export function AdministrationUserList() {
-  const { page, take, queryText } = usePagination();
-  const { data } = useUsers(queryText, take, page);
+  const { page, take, queryText, queryStatus } = usePagination();
+  const { data } = useUsers(queryText, take, page, queryStatus as USER_STATUS);
 
   if (!data || data === "unauthenticated" || data === "unauthorized") {
     return (

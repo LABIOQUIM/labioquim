@@ -1,5 +1,6 @@
 "use client";
 import { Box, Pagination, Text } from "@mantine/core";
+import { USER_STATUS } from "database";
 
 import { useUserCount } from "@/hooks/administration/useUserCount";
 import { usePagination } from "@/providers/Pagination";
@@ -7,8 +8,8 @@ import { usePagination } from "@/providers/Pagination";
 import classes from "./UserListPagination.module.css";
 
 export function AdministrationUserListPagination() {
-  const { take, page, setPage, queryText } = usePagination();
-  const { data } = useUserCount(queryText);
+  const { take, page, setPage, queryText, queryStatus } = usePagination();
+  const { data } = useUserCount(queryText, queryStatus as USER_STATUS);
 
   const userCount =
     data && data !== "unauthenticated" && data !== "unauthorized" ? data : 0;
