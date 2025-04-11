@@ -82,6 +82,7 @@ export function Download({ simulation, target }: Props) {
       classNames={{
         root: classes.root,
         inner: classes.inner,
+        label: classes.label,
       }}
       onClick={handleDownload}
       rightSection={<downloadInfo.Icon className={classes.bg_icon} size={64} />}

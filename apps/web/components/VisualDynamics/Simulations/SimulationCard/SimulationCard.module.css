@@ -67,8 +67,16 @@
 }
 
 .title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   text-align: center;
   text-transform: uppercase;
+  font-size: var(--mantine-font-size-xl) * 1.25;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    font-size: calc(var(--mantine-font-size-xl) * 1.5);
+  }
 }
 
 .section_title {

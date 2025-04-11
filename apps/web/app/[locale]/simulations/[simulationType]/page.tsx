@@ -15,7 +15,7 @@ export default async function NewSimulationPage({ params }: Props) {
 
   const titles: { [key in SIMULATION_TYPE]: string } = {
     acpype: "Protein + Ligand (prepared in ACPYPE)",
-    apo: "APO",
+    apo: "Free Protein (APO)",
   };
 
   return (

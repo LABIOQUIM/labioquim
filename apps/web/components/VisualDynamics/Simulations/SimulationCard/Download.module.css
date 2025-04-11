@@ -7,6 +7,14 @@
   justify-content: flex-start;
 }
 
+.label {
+  font-size: var(--mantine-font-size-lg);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    font-size: calc(var(--mantine-font-size-xl));
+  }
+}
+
 .bg_icon {
   position: absolute;
   right: var(--mantine-spacing-md);

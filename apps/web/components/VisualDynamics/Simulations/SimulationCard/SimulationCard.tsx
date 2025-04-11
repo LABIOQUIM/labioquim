@@ -51,7 +51,7 @@ export function SimulationCard({ simulation, type }: Props) {
   });
 
   const title = {
-    apo: "APO",
+    apo: "Free Protein (APO)",
     acpype: "Protein + Ligand (prepared in ACPYPE)",
   };
 
@@ -70,9 +70,9 @@ export function SimulationCard({ simulation, type }: Props) {
           <Box className={classes.section_info_container}>
             <Title className={classes.section_title}>Simulation Info</Title>
             <Box>
-              <Line label="Molecule name" value={simulation?.moleculeName} />
-              <Line label="Ligand ITP name" value={simulation?.ligandITPName} />
-              <Line label="Ligand PDB name" value={simulation?.ligandPDBName} />
+              <Line label="Macromolecule" value={simulation?.moleculeName} />
+              <Line label="Ligand ITP" value={simulation?.ligandITPName} />
+              <Line label="Ligand PDB" value={simulation?.ligandPDBName} />
               <Line
                 label="Submitted in"
                 value={dateFormat(simulation?.createdAt)}

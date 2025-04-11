@@ -27,7 +27,7 @@
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
   
-  height: calc(100dvh - var(--app-shell-header-offset) - 70px);
+  height: calc(100dvh - var(--app-shell-header-offset) - 70px - 46.8px);
 
   overflow-y: scroll;
 }
@@ -99,4 +99,32 @@
 .makerImage96px {
   height: 96px;
   width: auto;
+}
+
+.topLinks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+  padding: var(--mantine-spacing-xs);
+  width: 100%;
+}
+
+.topLinksIcons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--mantine-spacing-md);
+}
+.topLinksIcon {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.versionText {
+  color: var(--mantine-color-dark-2);
 }

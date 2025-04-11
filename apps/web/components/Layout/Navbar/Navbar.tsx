@@ -1,18 +1,23 @@
 "use client";
-import { Box } from "@mantine/core";
+import { Box, Text } from "@mantine/core";
 import {
+  IconBrandGithub,
   IconCrown,
   IconHome,
   IconInfoCircle,
   IconListNumbers,
+  IconMail,
   IconPlus,
   IconReportAnalytics,
+  IconSpider,
 } from "@tabler/icons-react";
+import Link from "next/link";
 
 import { Login } from "@/components/Auth/Login/Login";
 import { Register } from "@/components/Auth/Register/Register";
 import { User } from "@/components/Auth/User/User";
 import { useAuth } from "@/hooks/auth/useAuth";
+import pkg from "@/package.json";
 
 import { Section } from "./Section/Section";
 
@@ -46,7 +51,11 @@ const sections: NavSection[] = [
     links: [
       { icon: IconInfoCircle, label: "About", href: "/simulations/about" },
       { icon: IconInfoCircle, label: "My Submissions", href: "/simulations" },
-      { icon: IconPlus, label: "New APO", href: "/simulations/apo" },
+      {
+        icon: IconPlus,
+        label: "New Free Protein (APO)",
+        href: "/simulations/apo",
+      },
       {
         icon: IconPlus,
         label: "New Protein + Ligand",
@@ -118,6 +127,38 @@ export function Navbar({ toggle }: Props) {
 
   return (
     <Box className={classes.container}>
+      <Box className={classes.section} display="flex">
+        <Box className={classes.topLinks}>
+          <Box className={classes.topLinksIcons}>
+            <Link
+              className={classes.topLinksIcon}
+              title="LABIOQUIM on GitHub"
+              target="_blank"
+              href="https://github.com/labioquim/labioquim"
+            >
+              <IconBrandGithub />
+            </Link>
+            <Link
+              className={classes.topLinksIcon}
+              title="Report a Bug"
+              target="_blank"
+              href="https://github.com/LABIOQUIM/labioquim/issues/new?template=bug_report.md"
+            >
+              <IconSpider />
+            </Link>
+            <Link
+              className={classes.topLinksIcon}
+              title="LABIOQUIM Support Email"
+              target="_blank"
+              href="mailto:visualdynamics@fiocruz.br"
+            >
+              <IconMail />
+            </Link>
+          </Box>
+          <Text className={classes.versionText}>v{pkg.version}</Text>
+        </Box>
+      </Box>
+
       <Box className={classes.section}>
         {data?.session && data?.user ? <User /> : <Login />}
       </Box>
