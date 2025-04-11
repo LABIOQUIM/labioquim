@@ -14,17 +14,27 @@ const I18nMiddlewareInstance = createI18nMiddleware({
 interface PublicRoute {
   path: string;
   whenAuthenticated: "redirect" | "donothing";
+  mode?: "startsWith";
 }
 
 const publicRoutes: PublicRoute[] = [
   { path: "/", whenAuthenticated: "donothing" },
+  {
+    path: "/account/email-validation",
+    whenAuthenticated: "donothing",
+    mode: "startsWith",
+  },
 ];
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
 
 export default function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const publicRoute = publicRoutes.find((route) => route.path === path);
+  const publicRoute = publicRoutes.find((route) =>
+    route.mode === "startsWith"
+      ? path.startsWith(route.path)
+      : route.path === path
+  );
   const authToken = request.cookies.get("session");
 
   if (!authToken && publicRoute) {
