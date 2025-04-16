@@ -2,23 +2,21 @@
 import { useState } from "react";
 import { ActionIcon, Box, Button, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { IconCancel, IconHammer, IconHammerOff } from "@tabler/icons-react";
 import { User } from "database";
 
 import { updateUser } from "@/actions/administration/updateUser";
 import { Alert } from "@/components/Alerts/Alert";
-import { useUsers } from "@/hooks/administration/useUsers";
-import { usePagination } from "@/providers/Pagination";
 
 import classes from "./BanUser.module.css";
 
 interface Props {
-  user: User;
+  user: Omit<User, "password">;
+  refetch(): void;
 }
 
-export function BanUser({ user }: Props) {
-  const { take, page, queryText } = usePagination();
-  const { refetch: refetchUsers } = useUsers(queryText, take, page);
+export function BanUser({ user, refetch }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   const [status, setStatus] = useState<FormSubmissionStatus>();
 
@@ -36,12 +34,21 @@ export function BanUser({ user }: Props) {
         status: "warning",
         title: `Something went wrong: ${result}`,
       });
+      notifications.show({
+        message: `Something went wrong: ${result}`,
+        color: "orange",
+      });
     } else {
       setStatus({
         status: "success",
         title: `User ${user.userName} updated.`,
       });
-      refetchUsers();
+      notifications.show({
+        message: `User ${user.userName} updated.`,
+        color: "green",
+      });
+      refetch();
+      close();
     }
   }
 

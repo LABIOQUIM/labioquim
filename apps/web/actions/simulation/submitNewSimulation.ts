@@ -28,6 +28,7 @@ export async function submitNewSimulation(
 
     return response.data;
   } catch (err: any) {
+    console.log(err);
     if (err.status === 409) {
       return "queued-or-running";
     }

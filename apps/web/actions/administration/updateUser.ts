@@ -5,7 +5,7 @@ import { Prisma, prisma, User } from "database";
 import { validateAuth } from "../auth/validateAuth";
 
 export async function updateUser(
-  currentUser: User,
+  currentUser: Omit<User, "password">,
   nextData: Prisma.UserUpdateInput
 ) {
   const { user } = await validateAuth();

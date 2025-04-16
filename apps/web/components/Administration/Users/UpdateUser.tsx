@@ -10,21 +10,21 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { IconCancel, IconCheck, IconUserEdit } from "@tabler/icons-react";
 import { Prisma, User } from "database";
 
 import { updateUser } from "@/actions/administration/updateUser";
 import { Alert } from "@/components/Alerts/Alert";
-import { useUsers } from "@/hooks/administration/useUsers";
-import { usePagination } from "@/providers/Pagination";
 
 import classes from "./UpdateUser.module.css";
 
 interface Props {
-  user: User;
+  user: Omit<User, "password">;
+  refetch(): void;
 }
 
-export function UpdateUser({ user }: Props) {
+export function UpdateUser({ user, refetch }: Props) {
   const { getInputProps, onSubmit, reset } = useForm<Prisma.UserUpdateInput>({
     initialValues: {
       userName: user.userName,
@@ -34,8 +34,6 @@ export function UpdateUser({ user }: Props) {
       role: user.role,
     },
   });
-  const { queryText, take, page } = usePagination();
-  const { refetch: refetchUsers } = useUsers(queryText, take, page);
   const [opened, { open, close }] = useDisclosure(false);
   const [status, setStatus] = useState<FormSubmissionStatus>();
 
@@ -48,12 +46,21 @@ export function UpdateUser({ user }: Props) {
         status: "warning",
         title: `Something went wrong: ${result}`,
       });
+      notifications.show({
+        message: `Something went wrong: ${result}`,
+        color: "orange",
+      });
     } else {
       setStatus({
         status: "success",
         title: `User ${user.userName} updated.`,
       });
-      refetchUsers();
+      notifications.show({
+        message: `User ${user.userName} updated.`,
+        color: "green",
+      });
+      refetch();
+      close();
     }
   }
 

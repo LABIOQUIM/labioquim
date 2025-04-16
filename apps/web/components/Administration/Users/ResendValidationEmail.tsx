@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ActionIcon, Box, Button, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { render } from "@react-email/components";
 import { IconCancel, IconMailForward } from "@tabler/icons-react";
 import { User } from "database";
@@ -14,7 +15,7 @@ import AccountActivationEmail from "@/emails/account/Activation";
 import classes from "./UpdateUser.module.css";
 
 interface Props {
-  user: User;
+  user: Omit<User, "password">;
 }
 
 export function ResendValidationEmail({ user }: Props) {
@@ -51,15 +52,24 @@ export function ResendValidationEmail({ user }: Props) {
     );
 
     if (result !== "success") {
+      notifications.show({
+        message: `Something went wrong: ${result}`,
+        color: "orange",
+      });
       setStatus({
         status: "warning",
         title: `Something went wrong: ${result}`,
       });
     } else {
+      notifications.show({
+        message: `Sent ${user.userName} a new validation email.`,
+        color: "green",
+      });
       setStatus({
         status: "success",
         title: `Sent ${user.userName} a new validation email.`,
       });
+      close();
     }
   }
 

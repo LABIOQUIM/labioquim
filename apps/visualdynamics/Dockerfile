@@ -1,15 +1,19 @@
 FROM node:lts-slim AS base
 
 # RUN apk add --no-cache procps
-RUN apt update && apt install procps openssl curl tar cmake gcc g++ grace zip -y \
+RUN apt update && apt install procps openssl curl tar gcc g++ make grace zip -y \
   && apt-get clean
+
+RUN curl -OL https://github.com/Kitware/CMake/releases/download/v4.0.1/cmake-4.0.1-linux-x86_64.sh
+RUN chmod +x cmake-4.0.1-linux-x86_64.sh
+RUN ./cmake-4.0.1-linux-x86_64.sh --skip-license --prefix=/usr/
 
 WORKDIR /gromacsbuild
 
-RUN curl -O https://ftp.gromacs.org/gromacs/gromacs-2024.5.tar.gz
-RUN tar xfz gromacs-2024.5.tar.gz
-RUN cd gromacs-2024.5 && mkdir build
-WORKDIR /gromacsbuild/gromacs-2024.5/build
+RUN curl -O https://ftp.gromacs.org/gromacs/gromacs-2025.1.tar.gz
+RUN tar xfz gromacs-2025.1.tar.gz
+RUN cd gromacs-2025.1 && mkdir build
+WORKDIR /gromacsbuild/gromacs-2025.1/build
 RUN cmake .. -DGMX_BUILD_OWN_FFTW=ON -DREGRESSIONTEST_DOWNLOAD=on
 RUN make -j4
 RUN make install

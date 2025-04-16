@@ -14,13 +14,17 @@ import {
   Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import { render } from "@react-email/components";
 import {
   IconAlertTriangle,
   IconAtom2,
+  IconCheck,
   IconChevronDown,
+  IconClockPause,
   IconFileDownload,
   IconFileUpload,
+  IconX,
 } from "@tabler/icons-react";
 import { SIMULATION_TYPE } from "database";
 import { useRouter } from "next/navigation";
@@ -167,18 +171,47 @@ export function NewSimulationForm({ simulationType }: Props) {
     }
 
     const response = await submitNewSimulation(data, simulationType);
+
     if (response === "added-to-queue") {
+      notifications.show({
+        title: "Simulation queued!",
+        message: "Your simulation has been set up and should start soon.",
+        color: "green",
+        icon: <IconClockPause />,
+        withBorder: true,
+      });
       setTimeout(() => {
         refetch();
         router.push("/simulations/running");
       }, 2000);
     } else if (response === "unauthenticated") {
+      notifications.show({
+        title: "Unauthenticated!",
+        message:
+          "For some reason you are not authenticated. You can't start a simulation in that state.",
+        color: "red",
+        icon: <IconX />,
+        withBorder: true,
+      });
       router.replace("/?do=login&from=unauthenticated");
     } else if (response === "queued-or-running") {
+      notifications.show({
+        title: "Simulation queued or running!",
+        message: "You have a simulation in our workers already.",
+        color: "orange",
+        icon: <IconAlertTriangle />,
+        withBorder: true,
+      });
       refetch();
       router.push("/simulations/running");
     } else if (response === "unknown-error") {
-      //
+      notifications.show({
+        title: "Something went wrong!",
+        message: "It was not possible to set up your simulation at this time.",
+        color: "red",
+        icon: <IconX />,
+        withBorder: true,
+      });
     } else {
       let filename = simulationType;
       filename += `-${values.filePDB.name.split(".")[0]}`;
@@ -206,6 +239,14 @@ export function NewSimulationForm({ simulationType }: Props) {
       element.click();
 
       document.body.removeChild(element);
+
+      notifications.show({
+        title: "Commands downloaded!",
+        message: "Your simulation commands have been generated and downloaded.",
+        color: "green",
+        icon: <IconCheck />,
+        withBorder: true,
+      });
     }
     setIsLoading(false);
   };
