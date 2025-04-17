@@ -19,6 +19,7 @@ import { SIMULATION_STATUS } from "database";
 import { updateSimulation } from "@/actions/administration/updateSimulation";
 import { Loader } from "@/components/Loader/Loader";
 import { useSimulation } from "@/hooks/administration/useSimulation";
+import { useSimulationQueueInformation } from "@/hooks/administration/useSimulationQueueInformation";
 import { dateFormat } from "@/utils/dateFormat";
 
 import classes from "./SimulationInfo.module.css";
@@ -31,6 +32,7 @@ interface Props {
 export function SimulationInfo({ refetchAll, simulationId }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
   const { data, isLoading, refetch } = useSimulation(simulationId);
+  const { data: queueData } = useSimulationQueueInformation();
   const [newStatus, setNewStatus] = useState<SIMULATION_STATUS>();
 
   useEffect(() => {
@@ -79,6 +81,12 @@ export function SimulationInfo({ refetchAll, simulationId }: Props) {
       <Text>{value}</Text>
     </Box>
   );
+
+  console.log(queueData);
+  const jobAtRunner =
+    queueData && typeof queueData !== "string"
+      ? queueData.jobs.find((j) => j.data.simulationId === simulationId)
+      : null;
 
   return (
     <>
@@ -133,7 +141,21 @@ export function SimulationInfo({ refetchAll, simulationId }: Props) {
                     : "No creation date"
                 }
               />
-
+              <Divider />
+              <Title component="h2" order={5}>
+                Data at runner
+              </Title>
+              <Box className={classes.row_container}>
+                <TextPair label="Picked" value={jobAtRunner ? "Yes" : "No"} />
+                <TextPair
+                  label="Job ID"
+                  value={jobAtRunner ? jobAtRunner.id : "No"}
+                />
+                <TextPair
+                  label="Job Simulation Type"
+                  value={jobAtRunner ? jobAtRunner.data.type : "No"}
+                />
+              </Box>
               <Divider />
               <Title component="h2" order={5}>
                 Alter status

@@ -477,7 +477,16 @@ export class SimulationService {
     const waiting = await this.simulationQueue.getWaitingCount();
     const completed = await this.simulationQueue.getCompletedCount();
 
-    return { active, failed, paused, delayed, waiting, completed };
+    const jobs = await this.simulationQueue.getJobs([
+      "active",
+      "completed",
+      "delayed",
+      "failed",
+      "paused",
+      "waiting",
+    ]);
+
+    return { active, failed, paused, delayed, waiting, completed, jobs };
   }
 
   async getUserSimulationTree() {}
