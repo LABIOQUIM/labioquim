@@ -146,7 +146,10 @@ export function SimulationInfo({ refetchAll, simulationId }: Props) {
                 Data at runner
               </Title>
               <Box className={classes.row_container}>
-                <TextPair label="Picked" value={jobAtRunner ? "Yes" : "No"} />
+                <TextPair
+                  label="Picked"
+                  value={jobAtRunner ? "Yes" : "No or lost on restart"}
+                />
                 <TextPair
                   label="Job ID"
                   value={jobAtRunner ? jobAtRunner.id : "No"}
