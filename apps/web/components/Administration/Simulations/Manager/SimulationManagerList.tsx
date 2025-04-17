@@ -1,93 +1,183 @@
 "use client";
-import { ReactNode } from "react";
-import { Box, Table, Text } from "@mantine/core";
+import { useMemo, useState } from "react";
+import { ActionIcon, Tooltip } from "@mantine/core";
+import { IconRefresh } from "@tabler/icons-react";
+import { Prisma, SIMULATION_STATUS } from "database";
+import {
+  MantineReactTable,
+  type MRT_ColumnDef as MRTColumnDef,
+  type MRT_ColumnFiltersState as MRTColumnFiltersState,
+  type MRT_PaginationState as MRTPaginationState,
+  type MRT_SortingState as MRTSortingState,
+  useMantineReactTable,
+} from "mantine-react-table";
 
-import { Loader } from "@/components/Loader/Loader";
 import { useSimulations } from "@/hooks/administration/useSimulations";
-import { usePagination } from "@/providers/Pagination";
 import { dateFormat } from "@/utils/dateFormat";
 
-import classes from "./SimulationManagerList.module.css";
+import { SimulationInfo } from "./SimulationInfo";
+
+type SimulationWithUser = Prisma.SimulationGetPayload<{
+  include: {
+    user: {
+      select: {
+        id: true;
+        userName: true;
+      };
+    };
+  };
+}>;
 
 export function SimulationManagerList() {
-  const { page, take, queryText } = usePagination();
-  const { data } = useSimulations(queryText, take, page);
+  const [columnFilters, setColumnFilters] = useState<MRTColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<MRTSortingState>([
+    { id: "createdAt", desc: true },
+  ]);
+  const [pagination, setPagination] = useState<MRTPaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
-  if (!data || data === "unauthenticated" || data === "unauthorized") {
-    return (
-      <Box className={classes.loading_container}>
-        <Loader />
-      </Box>
-    );
-  }
-
-  const Th = ({ children }: { children: ReactNode }) => (
-    <Table.Th style={{ textWrap: "nowrap" }}>{children}</Table.Th>
+  const { data, isError, isFetching, isLoading, refetch } = useSimulations(
+    columnFilters,
+    sorting,
+    pagination
   );
 
-  const Td = ({ children }: { children: ReactNode }) => (
-    <Table.Td className={classes.td} title={String(children)}>
-      {children}
-    </Table.Td>
+  const colors: { [key in SIMULATION_STATUS]: string } = useMemo(
+    () => ({
+      GENERATED: "inherit",
+      COMPLETED: "green.3",
+      QUEUED: "orange.3",
+      ERRORED: "red.3",
+      RUNNING: "blue.3",
+      CANCELED: "grey",
+    }),
+    []
   );
 
-  return (
-    <Box className={classes.container}>
-      <Table
-        highlightOnHover
-        striped
-        classNames={{
-          table: classes.table,
-          tbody: classes.table,
-          tr: classes.tr,
-        }}
-        verticalSpacing="xs"
-        withRowBorders
-        withTableBorder
-      >
-        <Table.Thead>
-          <Table.Tr>
-            <Th>User</Th>
-            <Th>Molecule name</Th>
-            <Th>Ligand ITP name</Th>
-            <Th>Ligand PDB name</Th>
-            <Th>Type</Th>
-            <Th>Status</Th>
-            <Th>Started at</Th>
-            <Th>Ended at</Th>
-            <Th>Created at</Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {data.map((item) => {
-            let name = item.user.firstName;
-
-            if (item.user.lastName) {
-              name += ` ${item.user.lastName}`;
-            }
-
-            return (
-              <Table.Tr key={item.id}>
-                <Td>
-                  {item.user.userName} ({name})
-                </Td>
-                <Td>{item.moleculeName}</Td>
-                <Td>{item.ligandITPName}</Td>
-                <Td>{item.ligandPDBName}</Td>
-                <Td>{item.type.toLocaleUpperCase()}</Td>
-                <Td>
-                  <Text className={classes[item.status.toLocaleLowerCase()]}>
-                    {item.status}
-                  </Text>
-                </Td>
-                <Td>{dateFormat(item.startedAt)}</Td>
-                <Td>{dateFormat(item.endedAt)}</Td>
-                <Td>{dateFormat(item.createdAt)}</Td>
-              </Table.Tr>
-            );
-          })}
-        </Table.Tbody>
-      </Table>
-    </Box>
+  const columns = useMemo<MRTColumnDef<SimulationWithUser>[]>(
+    () => [
+      {
+        acessorKey: "actions",
+        Cell(props) {
+          return (
+            <SimulationInfo
+              refetchAll={refetch}
+              simulationId={props.row.original.id}
+            />
+          );
+        },
+        header: " ",
+        enableHiding: false,
+      },
+      {
+        accessorKey: "user.userName",
+        header: "Username",
+      },
+      {
+        accessorKey: "type",
+        header: "Type",
+      },
+      {
+        accessorKey: "moleculeName",
+        header: "Macromolecule",
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        filterVariant: "select",
+        mantineTableBodyCellProps(props) {
+          return {
+            c: colors[props.row.original.status],
+          };
+        },
+        mantineFilterSelectProps: {
+          data: [
+            { label: "Completed", value: "COMPLETED" },
+            { label: "Running", value: "RUNNING" },
+            { label: "Errored", value: "ERRORED" },
+            { label: "Queued", value: "QUEUED" },
+            { label: "GENERATED", value: "GENERATED" },
+          ],
+        },
+      },
+      {
+        accessorKey: "startedAt",
+        accessorFn(originalRow) {
+          return dateFormat(originalRow.startedAt);
+        },
+        header: "Started at",
+        filterVariant: "date-range",
+      },
+      {
+        accessorKey: "endedAt",
+        accessorFn(originalRow) {
+          return dateFormat(originalRow.endedAt);
+        },
+        header: "Ended at",
+        filterVariant: "date-range",
+      },
+      {
+        accessorKey: "createdAt",
+        accessorFn(originalRow) {
+          return dateFormat(originalRow.createdAt);
+        },
+        header: "Created at",
+        filterVariant: "date-range",
+      },
+    ],
+    [colors, refetch]
   );
+
+  const table = useMantineReactTable({
+    columns,
+    layoutMode: "semantic",
+    data: !data || typeof data === "string" ? [] : data[1],
+    enableColumnFilterModes: false,
+    columnFilterModeOptions: ["contains", "startsWith", "endsWith"],
+    manualFiltering: true,
+    manualPagination: true,
+    manualSorting: true,
+    mantineToolbarAlertBannerProps: isError
+      ? {
+          color: "red",
+          children: "Error loading data",
+        }
+      : undefined,
+    enableGlobalFilter: false,
+    onColumnFiltersChange: setColumnFilters,
+    onPaginationChange: setPagination,
+    onSortingChange: setSorting,
+    renderTopToolbarCustomActions: () => (
+      <Tooltip label="Refresh Data">
+        <ActionIcon onClick={() => refetch()}>
+          <IconRefresh />
+        </ActionIcon>
+      </Tooltip>
+    ),
+    rowCount: !data || typeof data === "string" ? 0 : data[0],
+    state: {
+      columnFilters,
+      isLoading,
+      pagination,
+      showAlertBanner: isError,
+      showProgressBars: isFetching,
+      sorting,
+    },
+    mantinePaperProps: {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        height: "calc(100dvh - 64px - 35.09px - 48px)",
+      },
+    },
+    mantineTableContainerProps: {
+      style: {
+        flex: 1,
+      },
+    },
+  });
+
+  return <MantineReactTable table={table} />;
 }

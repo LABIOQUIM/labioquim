@@ -1,9 +1,7 @@
-import { Box, Title } from "@mantine/core";
+import { Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 
 import { PageLayout } from "@/components/Layout/PageLayout/PageLayout";
-
-import classes from "./page.module.css";
 
 interface Props {
   params: Promise<{
@@ -24,9 +22,7 @@ export default async function AdminSystemManagePage({ params }: Props) {
   return (
     <PageLayout>
       <Title>Manage {systemId.toUpperCase()}</Title>
-      <Box className={classes.container}>
-        <SystemManage />
-      </Box>
+      <SystemManage />
     </PageLayout>
   );
 }
