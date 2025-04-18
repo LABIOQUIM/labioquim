@@ -125,7 +125,7 @@ export const AccountActivationEmail = ({
               Hello {firstName},
             </Text>
             <Text className="text-black text-[14px] leading-[24px]">
-              your account at <strong>LABIOQUIM</strong> is awaiting email
+              your account at <strong>Visual Dynamics</strong> is awaiting email
               validation.
             </Text>
             <Section className="text-center mt-[32px] mb-[32px]">
@@ -148,9 +148,9 @@ export const AccountActivationEmail = ({
               <span className="text-black">
                 {firstName} ({email})
               </span>
-              . If you were not register for a LABIOQUIM account, you can ignore
-              this email. If you are concerned about your account&apos;s safety,
-              please reply to this email to get in touch with us.
+              . If you were not register for a Visual Dynamics account, you can
+              ignore this email. If you are concerned about your account&apos;s
+              safety, please reply to this email to get in touch with us.
             </Text>
           </Container>
         </Body>

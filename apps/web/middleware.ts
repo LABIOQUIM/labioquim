@@ -24,6 +24,11 @@ const publicRoutes: PublicRoute[] = [
     whenAuthenticated: "donothing",
     mode: "startsWith",
   },
+  {
+    path: "/account/password-reset",
+    whenAuthenticated: "donothing",
+    mode: "startsWith",
+  },
 ];
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";

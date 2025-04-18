@@ -148,7 +148,7 @@ export const SimulationCompletedEmail = ({
               <span className="text-black">
                 {firstName} ({email})
               </span>
-              . If you are not registered for a LABIOQUIM account, you can
+              . If you are not registered for a Visual Dynamics account, you can
               ignore this email. If you think this was an error, please reply to
               this email to get in touch with us.
             </Text>

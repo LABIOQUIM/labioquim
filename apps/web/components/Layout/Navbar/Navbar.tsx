@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 
 import { Login } from "@/components/Auth/Login/Login";
+import { PasswordReset } from "@/components/Auth/PasswordReset/PasswordReset";
 import { Register } from "@/components/Auth/Register/Register";
 import { User } from "@/components/Auth/User/User";
 import { useAuth } from "@/hooks/auth/useAuth";
@@ -159,18 +160,27 @@ export function Navbar({ toggle }: Props) {
         </Box>
       </Box>
 
-      <Box className={classes.section}>
-        {data?.session && data?.user ? <User /> : <Login />}
-      </Box>
-
       {data?.session ? (
-        <Box className={classes.section}>
-          <Box className={classes.mainLinks}>{...mainLinks}</Box>
-        </Box>
+        <>
+          <Box className={classes.section}>
+            <User />
+          </Box>
+          <Box className={classes.section}>
+            <Box className={classes.mainLinks}>{...mainLinks}</Box>
+          </Box>
+        </>
       ) : (
-        <Box className={classes.section}>
-          <Register />
-        </Box>
+        <>
+          <Box className={classes.section}>
+            <Login />
+          </Box>
+          <Box className={classes.section}>
+            <Register />
+          </Box>
+          <Box className={classes.section}>
+            <PasswordReset />
+          </Box>
+        </>
       )}
     </Box>
   );

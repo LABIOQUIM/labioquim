@@ -118,7 +118,8 @@ export const AccountDisabledEmail = ({ email, firstName }: Props) => {
               Hello {firstName},
             </Text>
             <Text className="text-black text-[14px] leading-[24px]">
-              your account at <strong>LABIOQUIM</strong> has been disabled.
+              your account at <strong>Visual Dynamics</strong> has been
+              disabled.
             </Text>
             <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
             <Text className="text-[#666666] text-[12px] leading-[24px]">
@@ -126,7 +127,7 @@ export const AccountDisabledEmail = ({ email, firstName }: Props) => {
               <span className="text-black">
                 {firstName} ({email})
               </span>
-              . If you are not registered for a LABIOQUIM account, you can
+              . If you are not registered for a Visual Dynamics account, you can
               ignore this email. If you think this was an error, please reply to
               this email to get in touch with us.
             </Text>

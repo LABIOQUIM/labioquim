@@ -1,6 +1,8 @@
-import { Box, Title } from "@mantine/core";
-import { IconDeviceDesktopAnalytics } from "@tabler/icons-react";
+import { Box } from "@mantine/core";
+import Image from "next/image";
 import Link from "next/link";
+
+import LogoImage from "@/assets/visualdynamics.svg";
 
 import classes from "./Logo.module.css";
 
@@ -9,20 +11,17 @@ interface Props {
 }
 
 export function Logo({ size = "normal" }: Props) {
-  const titleStyles = {
-    normal: classes.title,
-    large: classes.titleLarge,
+  const height = {
+    normal: 48,
+    large: 96,
   };
-
-  const iconSizes = {
-    normal: 24,
-    large: 48,
-  };
-
   return (
     <Box component={Link} href="/" className={classes.container}>
-      <IconDeviceDesktopAnalytics size={iconSizes[size]} />
-      <Title className={titleStyles[size]}>LABIOQUIM</Title>
+      <Image
+        alt=""
+        src={LogoImage}
+        style={{ height: height[size], width: "auto" }}
+      />
     </Box>
   );
 }
