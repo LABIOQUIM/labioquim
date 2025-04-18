@@ -1,3 +1,0 @@
-DATABASE_URL=postgresql://postgres:postgresvd@157.86.211.121:5432/labioquim yarn workspace database db:migrate:deploy
-
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/labioquim yarn workspace database db:migrate:deploy

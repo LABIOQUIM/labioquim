@@ -8,6 +8,10 @@ __pycache__
 *.h5
 *.hdf5
 
+*.txt
+*.a
+
+
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
