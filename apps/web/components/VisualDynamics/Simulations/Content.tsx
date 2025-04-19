@@ -20,17 +20,6 @@ export function SimulationsContent() {
     return "Failed to load settings";
   }
 
-  if (settings?.systemMode === "MAINTENANCE") {
-    return (
-      <Box className={classes.containerDownOrMaintenance}>
-        <IconAlertTriangle size={48} />
-        <Title order={3}>
-          Visual Dynamics is currently down for maintenance.
-        </Title>
-      </Box>
-    );
-  }
-
   if (settings?.systemMode === "DOWN") {
     return (
       <Box className={classes.containerDownOrMaintenance}>

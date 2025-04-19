@@ -434,7 +434,7 @@ export function NewSimulationForm({ simulationType }: Props) {
           label="Box Distance (nm)"
           step={0.1}
           min={0.1}
-          max={5}
+          max={1.2}
           placeholder="Input a value"
           allowNegative={false}
           decimalScale={1}
