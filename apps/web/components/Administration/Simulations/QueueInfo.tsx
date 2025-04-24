@@ -22,14 +22,23 @@ export function AdminSimulationQueueInfo() {
     <Fragment>
       <Title order={2}>Queue Info</Title>
       <Paper className={classes.container} withBorder>
-        {Object.entries(data).map(([key, value]) => (
-          <Box className={clsx(classes.info_container, classes[key])} key={key}>
-            <Text className={classes.info_value}>{value}</Text>
-            <Title className={classes.info_title} order={4}>
-              {key}
-            </Title>
-          </Box>
-        ))}
+        {Object.entries(data).map(([key, value]) => {
+          if (key === "jobs") {
+            return null;
+          }
+
+          return (
+            <Box
+              className={clsx(classes.info_container, classes[key])}
+              key={key}
+            >
+              <Text className={classes.info_value}>{value}</Text>
+              <Title className={classes.info_title} order={4}>
+                {key}
+              </Title>
+            </Box>
+          );
+        })}
       </Paper>
     </Fragment>
   );
