@@ -15,6 +15,9 @@ import { SystemInfoModule } from "./systeminfo/systeminfo.module";
         host: "redis",
         port: 6379,
       },
+      defaultJobOptions: {
+        attempts: 1,
+      },
     }),
     BullBoardModule.forRoot({
       route: "/queues",

@@ -55,6 +55,7 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
   } catch {
     await onError(job, new Error("Failed to Setup!"));
     cb(new Error(`${job.data.simulationId} failed to setup!`));
+    return;
   }
 
   try {
@@ -78,6 +79,7 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
   } catch (e) {
     await onError(job, new Error(e?.message));
     cb(new Error(`${job.data.simulationId} failed to run command!`));
+    return;
   }
 
   try {
@@ -112,6 +114,7 @@ export default async function (job: Job<SimulateData>, cb: DoneCallback) {
   } catch {
     await onError(job, new Error("Failed on post-steps"));
     cb(new Error(`${job.data.simulationId} failed on post-steps!`));
+    return;
   }
 
   cb(null, `${job.data.simulationId} done!`);
