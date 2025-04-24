@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import { Simulation, SIMULATION_TYPE } from "database";
 import Link from "next/link";
 
+import { Alert } from "@/components/Alerts/Alert";
 import { dateFormat } from "@/utils/dateFormat";
 
 import { Download } from "./Download";
@@ -82,7 +83,16 @@ export function SimulationCard({ simulation, type }: Props) {
                 value={dateFormat(simulation?.startedAt)}
               />
               <Line label="Ended at" value={dateFormat(simulation?.endedAt)} />
-              <Line label="Error cause" value={simulation?.errorCause} />
+              {simulation.errorCause && (
+                <Alert
+                  mt="xs"
+                  status={{
+                    status: "error",
+                    title: "Error cause",
+                    message: simulation.errorCause,
+                  }}
+                />
+              )}
             </Box>
           </Box>
           <Box className={classes.download_section_container}>
