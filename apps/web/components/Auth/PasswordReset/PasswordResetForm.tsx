@@ -4,11 +4,9 @@ import { useState } from "react";
 import { Box, Button, Text, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 
 import { resetPassword } from "@/actions/auth/resetPassword";
-import { Alert } from "@/components/Alerts/Alert";
 import { Loader } from "@/components/Loader/Loader";
 import { usePasswordReset } from "@/hooks/auth/usePasswordReset";
 import { normalizeString } from "@/utils/normalizeString";
@@ -79,19 +77,19 @@ export function PasswordResetForm({ resetId }: Props) {
     );
   }
 
-  if (data.used || !data.usable || dayjs(data.validUntil).isAfter(dayjs())) {
-    return (
-      <Box component="form" className={classes.formContainer}>
-        <Alert
-          status={{
-            status: "warning",
-            title: "This reset code has expired.",
-            message: "You will need to request a new reset code.",
-          }}
-        />
-      </Box>
-    );
-  }
+  // if (data.used || !data.usable || dayjs(data.validUntil).isAfter(dayjs())) {
+  //   return (
+  //     <Box component="form" className={classes.formContainer}>
+  //       <Alert
+  //         status={{
+  //           status: "warning",
+  //           title: "This reset code has expired.",
+  //           message: "You will need to request a new reset code.",
+  //         }}
+  //       />
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Box
