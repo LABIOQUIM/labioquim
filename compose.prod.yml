@@ -55,6 +55,8 @@ services:
     networks:
       - traefik
     image: labioquim/visualdynamics:latest
+    volumes:
+      - visualdynamics:/files
     depends_on:
       - mailer
       - redis
@@ -91,6 +93,8 @@ services:
       - "443:443"
 
 volumes:
+  visualdynamics:
+    driver: nfsvol
   database:
     driver: nfsvol
   redis:
