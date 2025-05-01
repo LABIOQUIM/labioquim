@@ -3,6 +3,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { Queue } from "bull";
 import * as ChildProcess from "child_process";
 import { Simulation, SIMULATION_TYPE } from "database";
+import * as dirTree from "directory-tree";
 import {
   cpSync,
   createWriteStream,
@@ -469,6 +470,22 @@ export class SimulationService {
     return readFileSync(join(runFolderPath, "results.zip"));
   }
 
+  async getUserFile(path: string) {
+    if (!existsSync(path)) {
+      return "no-results";
+    }
+
+    return readFileSync(path);
+  }
+
+  async getUserLastSimulationFiles(userName: string) {
+    const userFolder = `/files/${userName}`;
+
+    const tree = dirTree(userFolder);
+
+    return tree;
+  }
+
   async getQueueInfo() {
     const active = await this.simulationQueue.getActiveCount();
     const failed = await this.simulationQueue.getFailedCount();
@@ -488,6 +505,4 @@ export class SimulationService {
 
     return { active, failed, paused, delayed, waiting, completed, jobs };
   }
-
-  async getUserSimulationTree() {}
 }

@@ -98,7 +98,7 @@ export function SimulationManagerList() {
             { label: "Running", value: "RUNNING" },
             { label: "Errored", value: "ERRORED" },
             { label: "Queued", value: "QUEUED" },
-            { label: "GENERATED", value: "GENERATED" },
+            { label: "Generated", value: "GENERATED" },
           ],
         },
       },
@@ -169,7 +169,7 @@ export function SimulationManagerList() {
       style: {
         display: "flex",
         flexDirection: "column",
-        height: "calc(100dvh - 64px - 35.09px - 48px)",
+        height: "calc(100dvh - 64px - 35.09px - 53px)",
       },
     },
     mantineTableContainerProps: {

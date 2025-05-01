@@ -82,7 +82,6 @@ export function SimulationInfo({ refetchAll, simulationId }: Props) {
     </Box>
   );
 
-  console.log(queueData);
   const jobAtRunner =
     queueData && typeof queueData !== "string"
       ? queueData.jobs.find((j) => j.data.simulationId === simulationId)
@@ -92,9 +91,7 @@ export function SimulationInfo({ refetchAll, simulationId }: Props) {
     <>
       <Modal
         centered
-        classNames={{
-          title: classes.modalTitle,
-        }}
+        classNames={{ title: classes.modalTitle }}
         onClose={close}
         opened={opened}
         overlayProps={{

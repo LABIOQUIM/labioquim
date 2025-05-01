@@ -134,6 +134,28 @@ export class SimulationController {
   }
 
   @UseGuards(UsernameGuard)
+  @Get("/files")
+  async getLastSimulationFiles(@Req() request: Request) {
+    const data = await this.simulationService.getUserLastSimulationFiles(
+      request.userName
+    );
+
+    return data;
+  }
+
+  @UseGuards(UsernameGuard)
+  @Get("/download/file")
+  async getUserFile(@Req() request: Request, @Query("path") path: string) {
+    const file = await this.simulationService.getUserFile(path);
+
+    if (file === "no-results") {
+      throw new HttpException("no-results", HttpStatus.OK);
+    }
+
+    return new StreamableFile(file);
+  }
+
+  @UseGuards(UsernameGuard)
   @Get("/downloads/figures")
   async getLastSimulationFigures(
     @Req() request: Request,

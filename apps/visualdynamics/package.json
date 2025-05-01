@@ -27,6 +27,7 @@
     "axios": "^1.7.8",
     "bull": "4.16.4",
     "database": "workspace:*",
+    "directory-tree": "^3.5.2",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.1",
     "shell-quote": "1.8.1",

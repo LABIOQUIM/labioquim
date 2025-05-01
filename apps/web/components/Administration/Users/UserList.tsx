@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import { ActionIcon, Box, Tooltip } from "@mantine/core";
-import { IconRefresh } from "@tabler/icons-react";
+import { IconFolder, IconRefresh } from "@tabler/icons-react";
 import { User } from "lucia";
 import {
   MantineReactTable,
@@ -11,6 +11,7 @@ import {
   type MRT_SortingState as MRTSortingState,
   useMantineReactTable,
 } from "mantine-react-table";
+import Link from "next/link";
 
 import { useUsers } from "@/hooks/administration/useUsers";
 import { dateFormat } from "@/utils/dateFormat";
@@ -107,6 +108,18 @@ export function AdministrationUserList() {
               <ResendValidationEmail user={props.row.original} />
               <UpdateUser user={props.row.original} refetch={refetch} />
               <BanUser user={props.row.original} refetch={refetch} />
+              <Link
+                href={`/administration/users/${props.row.original.userName}`}
+              >
+                <ActionIcon
+                  color="cyan"
+                  variant="light"
+                  size="lg"
+                  title="File Tree"
+                >
+                  <IconFolder />
+                </ActionIcon>
+              </Link>
             </Box>
           );
         },
