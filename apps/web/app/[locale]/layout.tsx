@@ -3,6 +3,7 @@ import { MantineProvider } from "@mantine/core";
 import { DatesProvider } from "@mantine/dates";
 import { Notifications } from "@mantine/notifications";
 import { Metadata } from "next";
+import Script from "next/script";
 
 import { Shell } from "@/components/Layout/Shell/Shell";
 import { I18nProviderClient } from "@/locales/client";
@@ -51,6 +52,24 @@ export default async function RootLayout({
             </DatesProvider>
           </MantineProvider>
         </I18nProviderClient>
+        {process.env.NODE_ENV !== "development" ? (
+          <>
+            <Script
+              async
+              defer
+              src="https://www.googletagmanager.com/gtag/js?id=G-02198VT7VC"
+            />
+            <Script id="google-analytics" defer strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-02198VT7VC');
+              `}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   );
