@@ -37,10 +37,10 @@ export default async function RootLayout({
   const { locale } = await params;
 
   return (
-    <html lang={locale} data-mantine-color-scheme="dark">
+    <html lang={locale} data-mantine-color-scheme="light">
       <body>
         <I18nProviderClient locale={locale}>
-          <MantineProvider forceColorScheme="dark" theme={theme}>
+          <MantineProvider forceColorScheme="light" theme={theme}>
             <DatesProvider
               settings={{
                 firstDayOfWeek: 0,

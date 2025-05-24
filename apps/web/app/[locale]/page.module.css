@@ -13,3 +13,12 @@
   margin-top: auto;
   margin-bottom: auto;
 }
+
+.sectionTitle {
+  font-family: 'Lexend', sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.2rem); /* Adjusted size */
+  font-weight: 700;
+  color: var(--mantine-color-black);
+  text-align: center;
+  margin-bottom: calc(var(--mantine-spacing-xl) * 1.5);
+}
