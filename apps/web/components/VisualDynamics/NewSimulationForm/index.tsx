@@ -25,6 +25,7 @@ import {
   IconFileDownload,
   IconFileUpload,
   IconFileZip,
+  IconFileZip,
   IconX,
 } from "@tabler/icons-react";
 import { SIMULATION_TYPE } from "database";

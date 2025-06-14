@@ -425,6 +425,10 @@ export class SimulationService {
       return "no-figures";
     }
 
+    ChildProcess.execSync("cp *.xvg ../figures", {
+      cwd: runFolderPath,
+    });
+
     ChildProcess.execSync(`zip -r figures.zip *`, {
       cwd: figuresFolderPath,
     });
@@ -483,6 +487,16 @@ export class SimulationService {
     );
 
     return readFileSync(join(runFolderPath, "results.zip"));
+  }
+
+  async getMDPFiles() {
+    const runFolderPath = `${cwd()}/static/mdp`;
+
+    ChildProcess.execSync(`zip -r mdpfiles.zip *`, {
+      cwd: runFolderPath,
+    });
+
+    return readFileSync(join(runFolderPath, "mdpfiles.zip"));
   }
 
   async getUserFile(path: string) {
