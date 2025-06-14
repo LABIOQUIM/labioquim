@@ -24,11 +24,13 @@ import {
   IconClockPause,
   IconFileDownload,
   IconFileUpload,
+  IconFileZip,
   IconX,
 } from "@tabler/icons-react";
 import { SIMULATION_TYPE } from "database";
 import { useRouter } from "next/navigation";
 
+import { getMDPFiles } from "@/actions/simulation/getMDPFiles";
 import { submitNewSimulation } from "@/actions/simulation/submitNewSimulation";
 import { Alert } from "@/components/Alerts/Alert";
 import SimulationCompletedEmail from "@/emails/simulation/Completed";
@@ -254,6 +256,21 @@ export function NewSimulationForm({ simulationType }: Props) {
   const onSubmitRun = () => {
     onSubmitSimulation(true);
   };
+
+  async function handleDownloadMDPFiles() {
+    setIsLoading(true);
+    const data = await getMDPFiles();
+    const link = document.createElement("a");
+    link.download = `visualdynamics-mdpfiles.zip`;
+    const blobUrl = window.URL.createObjectURL(
+      new Blob([new Uint8Array(Buffer.from(data, "base64"))])
+    );
+
+    link.href = blobUrl;
+    link.click();
+    window.URL.revokeObjectURL(blobUrl);
+    setIsLoading(false);
+  }
 
   if (settings === "error" || settings === "unauthenticated") {
     return "Failed to load settings";
@@ -493,6 +510,16 @@ export function NewSimulationForm({ simulationType }: Props) {
           type="submit"
         >
           Run Simulation
+        </Button>
+        <Button
+          disabled={isLoading}
+          leftSection={<IconFileZip />}
+          onClick={handleDownloadMDPFiles}
+          variant="default"
+          size="lg"
+          type="button"
+        >
+          Download MDP Files
         </Button>
       </Box>
     </Box>

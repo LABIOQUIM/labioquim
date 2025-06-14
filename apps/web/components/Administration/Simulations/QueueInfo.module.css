@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  background: var(--mantine-color-dark-6);
+  background: var(--mantine-color-gray-0);
   grid-template-columns: 1fr;
   height: fit-content;
   padding: var(--mantine-spacing-md);
@@ -35,7 +35,7 @@
 }
 
 .paused {
-  color: var(--mantine-color-gray-3);
+  color: var(--mantine-color-gray-6);
 }
 
 .delayed {

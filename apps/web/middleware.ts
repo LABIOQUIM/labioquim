@@ -19,8 +19,8 @@ interface PublicRoute {
 
 const publicRoutes: PublicRoute[] = [
   { path: "/", whenAuthenticated: "donothing" },
-  { path: "/auth/login", whenAuthenticated: "donothing" },
-  { path: "/auth/register", whenAuthenticated: "donothing" },
+  { path: "/auth/login", whenAuthenticated: "redirect" },
+  { path: "/auth/register", whenAuthenticated: "redirect" },
   { path: "/analytics", whenAuthenticated: "donothing" },
   { path: "/guides", whenAuthenticated: "donothing" },
   {
@@ -36,6 +36,7 @@ const publicRoutes: PublicRoute[] = [
 ];
 
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = "/";
+const REDIRECT_WHEN_AUTHENTICATED_ROUTE = "/dashboard/simulations";
 
 export default function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
@@ -45,6 +46,18 @@ export default function middleware(request: NextRequest) {
       : route.path === path
   );
   const authToken = request.cookies.get("session");
+
+  if (
+    authToken &&
+    publicRoute &&
+    publicRoute.whenAuthenticated === "redirect"
+  ) {
+    const redirectUrl = request.nextUrl.clone();
+
+    redirectUrl.pathname = REDIRECT_WHEN_AUTHENTICATED_ROUTE;
+
+    return NextResponse.redirect(redirectUrl);
+  }
 
   if (!authToken && publicRoute) {
     return I18nMiddlewareInstance(request);

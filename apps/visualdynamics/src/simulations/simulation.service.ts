@@ -411,7 +411,12 @@ export class SimulationService {
 
   async getUserLastSimulationFigures(userName: string, type: SIMULATION_TYPE) {
     const userFolderPath = `/files/${userName}`;
+    const runFolderPath = `/files/${userName}/${type}/run`;
     const figuresFolderPath = `${userFolderPath}/${type}/figures`;
+
+    ChildProcess.execSync("cp *.xvg ../figures", {
+      cwd: runFolderPath,
+    });
 
     if (
       !existsSync(figuresFolderPath) ||
@@ -425,6 +430,16 @@ export class SimulationService {
     });
 
     return readFileSync(join(figuresFolderPath, "figures.zip"));
+  }
+
+  async getMDPFiles() {
+    const runFolderPath = `${cwd()}/static/mdp`;
+
+    ChildProcess.execSync(`zip -r mdpfiles.zip *`, {
+      cwd: runFolderPath,
+    });
+
+    return readFileSync(join(runFolderPath, "mdpfiles.zip"));
   }
 
   async getUserLastSimulationCommands(userName: string, type: SIMULATION_TYPE) {
