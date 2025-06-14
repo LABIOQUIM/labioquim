@@ -5,6 +5,7 @@ import {
   IconCloudComputing,
   IconCode,
   IconEye,
+  IconShare3,
   IconUsers,
 } from "@tabler/icons-react";
 
@@ -14,16 +15,23 @@ import styles from "./FeaturesSection.module.css";
 
 const featuresData = [
   {
-    icon: <IconChartArrowsVertical size={32} />,
-    title: "Molecular Dynamics on the Web",
+    icon: <IconEye size={32} />,
+    title: "Interactive 3D Visualization",
+    soon: true,
     description:
-      "Run GROMACS-powered simulations directly in your browser, no installation required.",
+      "Explore molecular structures and trajectories in stunning 3D, powered by NGL Viewer.",
   },
   {
-    icon: <IconEye size={32} />,
-    title: "Pre generated graphics",
+    icon: <IconChartArrowsVertical size={32} />,
+    title: "Powerful Analysis Tools",
+    description: "Perform RMSD, RMSF and more, directly in your browser.",
+  },
+  {
+    icon: <IconShare3 size={32} />,
+    title: "Seamless Collaboration",
+    soon: true,
     description:
-      "Download pre-generated graphics of your MD simulations in a single click.",
+      "Easily share your sessions, visualizations, and analysis results with colleagues.",
   },
   {
     icon: <IconCloudComputing size={32} />,
@@ -62,6 +70,7 @@ export function LanderFeaturesSection() {
               icon={feature.icon}
               title={feature.title}
               description={feature.description}
+              soon={feature.soon}
             />
           ))}
         </SimpleGrid>

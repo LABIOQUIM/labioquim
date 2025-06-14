@@ -134,6 +134,14 @@ export class SimulationController {
   }
 
   @UseGuards(UsernameGuard)
+  @Get("/downloads/mdp")
+  async getMDPFiles() {
+    const file = await this.simulationService.getMDPFiles();
+
+    return new StreamableFile(file);
+  }
+
+  @UseGuards(UsernameGuard)
   @Get("/files")
   async getLastSimulationFiles(@Req() request: Request) {
     const data = await this.simulationService.getUserLastSimulationFiles(
@@ -223,14 +231,6 @@ export class SimulationController {
     if (file === "no-results") {
       throw new HttpException("no-results", HttpStatus.OK);
     }
-
-    return new StreamableFile(file);
-  }
-
-  @UseGuards(UsernameGuard)
-  @Get("/downloads/mdp")
-  async getMDPFiles() {
-    const file = await this.simulationService.getMDPFiles();
 
     return new StreamableFile(file);
   }

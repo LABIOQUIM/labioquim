@@ -5,7 +5,7 @@ import { Notifications } from "@mantine/notifications";
 import { Metadata } from "next";
 import Script from "next/script";
 
-import { Shell } from "@/components/Layout/Shell/Shell";
+import { GlobalLayout } from "@/components/Layout/GlobalLayout/GlobalLayout";
 import { I18nProviderClient } from "@/locales/client";
 import { theme } from "@/theme";
 
@@ -15,6 +15,7 @@ import "@mantine/dropzone/styles.layer.css";
 import "@mantine/notifications/styles.layer.css";
 import "@mantine/charts/styles.layer.css";
 import "mantine-react-table/styles.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
@@ -48,7 +49,7 @@ export default async function RootLayout({
               }}
             >
               <Notifications position="top-right" />
-              <Shell>{children}</Shell>
+              <GlobalLayout>{children}</GlobalLayout>
             </DatesProvider>
           </MantineProvider>
         </I18nProviderClient>

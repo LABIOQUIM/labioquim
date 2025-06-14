@@ -49,6 +49,13 @@
   /* No heavy shadow on icon wrapper for cleaner light look */
 }
 
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--mantine-spacing-xs) / 2);
+}
+
 .title {
   font-size: var(--mantine-font-size-lg); /* Slightly smaller for light */
   font-weight: 600; /* Lexend 600 */

@@ -257,7 +257,7 @@ export function NewSimulationForm({ simulationType }: Props) {
     onSubmitSimulation(true);
   };
 
-  async function handleDownload() {
+  async function handleDownloadMDPFiles() {
     setIsLoading(true);
     const data = await getMDPFiles();
     const link = document.createElement("a");
@@ -514,7 +514,7 @@ export function NewSimulationForm({ simulationType }: Props) {
         <Button
           disabled={isLoading}
           leftSection={<IconFileZip />}
-          onClick={handleDownload}
+          onClick={handleDownloadMDPFiles}
           variant="default"
           size="lg"
           type="button"

@@ -30,10 +30,7 @@ export function Section({ section, toggle, userRole }: Props) {
                 onClick={toggle}
                 className={clsx(classes.linkContainer, {
                   [classes.linkActiveContainer]:
-                    !section.disabled &&
-                    (link.href === "/" || link.href === "/simulations"
-                      ? pathname === link.href
-                      : pathname.startsWith(link.href)),
+                    !section.disabled && pathname === link.href,
                 })}
               >
                 <div className={classes.linkInnerContainer}>

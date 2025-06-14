@@ -1,19 +1,8 @@
-import { HTMLAttributes, ReactElement, useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Group,
-  Modal,
-  rem,
-  Text,
-  TextInput,
-  UnstyledButton,
-} from "@mantine/core";
+"use client";
+import { ReactElement, useState } from "react";
+import { Box, Button, Group, PasswordInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
 import { render } from "@react-email/components";
-import { IconChevronRight, IconUserPlus } from "@tabler/icons-react";
 
 import { createUserValidation } from "@/actions/administration/createUserValidation";
 import { register } from "@/actions/auth/register";
@@ -24,12 +13,9 @@ import { normalizeString } from "@/utils/normalizeString";
 
 import classes from "./Register.module.css";
 
-interface Props extends HTMLAttributes<HTMLButtonElement> {}
-
-export function Register(props: Props): ReactElement {
-  const [opened, { open, close }] = useDisclosure(false);
+export function Register(): ReactElement {
   const [status, setStatus] = useState<FormSubmissionStatus>();
-  const { getInputProps, onSubmit, reset } = useForm<RegisterFormInputs>({
+  const { getInputProps, onSubmit } = useForm<RegisterFormInputs>({
     initialValues: {
       email: "",
       firstName: "",
@@ -120,111 +106,57 @@ export function Register(props: Props): ReactElement {
     }
   }
 
-  function onClose() {
-    close();
-    reset();
-    setStatus(undefined);
-  }
-
   return (
-    <>
-      <Modal
-        centered
-        classNames={{
-          title: classes.modalTitle,
-        }}
-        keepMounted={false}
-        onClose={onClose}
-        opened={opened}
-        overlayProps={{
-          backgroundOpacity: 0.55,
-          blur: 3,
-        }}
-        size="md"
-        title="Register"
-      >
-        {status?.status === "success" ? (
-          <Box className={classes.formContainer}>
-            <Alert status={status} />
-            <Button onClick={onClose}>Confirm</Button>
-          </Box>
-        ) : (
-          <Box
-            component="form"
-            className={classes.formContainer}
-            onSubmit={onSubmit(doRegister)}
-          >
-            {status && status.status !== "loading" && <Alert status={status} />}
-            <Group gap="sm" w="100%">
-              <TextInput
-                disabled={status?.status === "loading"}
-                label="First Name"
-                placeholder="e.g.: John"
-                withAsterisk
-                style={{ flex: 1 }}
-                {...getInputProps("firstName")}
-              />
-              <TextInput
-                disabled={status?.status === "loading"}
-                label="Last Name"
-                placeholder="e.g.: Doe"
-                withAsterisk
-                style={{ flex: 1 }}
-                {...getInputProps("lastName")}
-              />
-            </Group>
-            <TextInput
-              disabled={status?.status === "loading"}
-              label="Username"
-              placeholder="e.g.: johndoe"
-              withAsterisk
-              {...getInputProps("userName")}
-            />
-            <TextInput
-              disabled={status?.status === "loading"}
-              label="Email"
-              placeholder="e.g.: john@doe.com"
-              withAsterisk
-              {...getInputProps("email")}
-            />
-            <TextInput
-              disabled={status?.status === "loading"}
-              label="Password"
-              placeholder="******"
-              withAsterisk
-              type="password"
-              {...getInputProps("password")}
-            />
+    <Box
+      component="form"
+      className={classes.formContainer}
+      onSubmit={onSubmit(doRegister)}
+    >
+      {status && status.status !== "loading" && <Alert status={status} />}
+      <Group gap="sm" w="100%">
+        <TextInput
+          disabled={status?.status === "loading"}
+          label="First Name"
+          placeholder="e.g.: John"
+          withAsterisk
+          style={{ flex: 1 }}
+          {...getInputProps("firstName")}
+        />
+        <TextInput
+          disabled={status?.status === "loading"}
+          label="Last Name"
+          placeholder="e.g.: Doe"
+          withAsterisk
+          style={{ flex: 1 }}
+          {...getInputProps("lastName")}
+        />
+      </Group>
+      <TextInput
+        disabled={status?.status === "loading"}
+        label="Username"
+        placeholder="e.g.: johndoe"
+        withAsterisk
+        {...getInputProps("userName")}
+      />
+      <TextInput
+        disabled={status?.status === "loading"}
+        label="Email"
+        placeholder="e.g.: john@doe.com"
+        withAsterisk
+        {...getInputProps("email")}
+      />
+      <PasswordInput
+        disabled={status?.status === "loading"}
+        label="Password"
+        placeholder="******"
+        withAsterisk
+        type="password"
+        {...getInputProps("password")}
+      />
 
-            <Button loading={status?.status === "loading"} type="submit">
-              Register
-            </Button>
-          </Box>
-        )}
-      </Modal>
-
-      <UnstyledButton className={classes.user} onClick={open} {...props}>
-        <Group>
-          <Avatar radius="xl">
-            <IconUserPlus />
-          </Avatar>
-
-          <div style={{ flex: 1 }}>
-            <Text size="sm" fw={500}>
-              Register
-            </Text>
-
-            <Text c="dimmed" size="xs">
-              Create a new account to access the system
-            </Text>
-          </div>
-
-          <IconChevronRight
-            style={{ width: rem(14), height: rem(14) }}
-            stroke={1.5}
-          />
-        </Group>
-      </UnstyledButton>
-    </>
+      <Button loading={status?.status === "loading"} type="submit">
+        Register
+      </Button>
+    </Box>
   );
 }

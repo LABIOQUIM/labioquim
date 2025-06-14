@@ -1,19 +1,8 @@
+"use client";
 import { useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Group,
-  Modal,
-  rem,
-  Text,
-  TextInput,
-  UnstyledButton,
-} from "@mantine/core";
+import { Box, Button, PasswordInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useDisclosure } from "@mantine/hooks";
-import { IconChevronRight } from "@tabler/icons-react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { login } from "@/actions/auth/login";
 import { Alert } from "@/components/Alerts/Alert";
@@ -28,15 +17,13 @@ interface FormInputs {
 }
 
 export function Login() {
+  const router = useRouter();
   const reload = useReloadAuth();
-  const searchParamDo = useSearchParams().get("do");
-  const shouldShowLoginModal = searchParamDo === "login";
   const searchParamFrom = useSearchParams().get("from");
   const showFromEmailValidationAlert = searchParamFrom === "email-validation";
-  const showUnauthenticatedAlert = searchParamFrom === "unauthenticated";
-  const [opened, { open, close }] = useDisclosure(false);
+
   const [status, setStatus] = useState<FormSubmissionStatus>();
-  const { getInputProps, onSubmit, reset } = useForm<FormInputs>({
+  const { getInputProps, onSubmit } = useForm<FormInputs>({
     initialValues: {
       userName: "",
       password: "",
@@ -79,99 +66,59 @@ export function Login() {
         });
       } else {
         setStatus({ status: "success", title: "You've been signed-in" });
-        reload();
-        close();
+        reload().then(() => router.replace("/dashboard/simulations"));
       }
     });
   }
 
-  function onClose() {
-    close();
-    reset();
-    setStatus(undefined);
+  let RenderAlert = () => (
+    <Alert
+      status={{
+        status: "info",
+        title: "Login to continue to Visual Dynamics.",
+      }}
+    />
+  );
+
+  if (showFromEmailValidationAlert) {
+    RenderAlert = () => (
+      <Alert
+        status={{
+          status: "info",
+          title: "Your email has been validated",
+          message: "Your can now login and use Visual Dynamics",
+        }}
+      />
+    );
+  } else if (status && status.status !== "loading") {
+    RenderAlert = () => <Alert status={status} />;
   }
 
   return (
-    <>
-      <Modal
-        centered
-        classNames={{
-          title: classes.modalTitle,
-        }}
-        onClose={onClose}
-        opened={opened || shouldShowLoginModal}
-        overlayProps={{
-          backgroundOpacity: 0.55,
-          blur: 3,
-        }}
-        size="md"
-        title="Login"
-      >
-        <Box
-          component="form"
-          className={classes.formContainer}
-          onSubmit={onSubmit(doLogin)}
-        >
-          {showFromEmailValidationAlert && (
-            <Alert
-              status={{
-                status: "info",
-                title: "Your email has been validated",
-                message: "Your can now login and use Visual Dynamics",
-              }}
-            />
-          )}
-          {showUnauthenticatedAlert && (
-            <Alert
-              status={{
-                status: "info",
-                title: "You're not authenticated.",
-                message: "You must be logged in to use Visual Dynamics",
-              }}
-            />
-          )}
-          {status && status.status !== "loading" && <Alert status={status} />}
-          <TextInput
-            data-autofocus
-            disabled={status?.status === "loading"}
-            label="Username"
-            withAsterisk
-            {...getInputProps("userName")}
-          />
-          <TextInput
-            disabled={status?.status === "loading"}
-            label="Password"
-            withAsterisk
-            type="password"
-            {...getInputProps("password")}
-          />
+    <Box
+      component="form"
+      className={classes.formContainer}
+      onSubmit={onSubmit(doLogin)}
+    >
+      <RenderAlert />
+      <TextInput
+        data-autofocus
+        disabled={status?.status === "loading"}
+        label="Username"
+        withAsterisk
+        {...getInputProps("userName")}
+      />
+      <PasswordInput
+        disabled={status?.status === "loading"}
+        label="Password"
+        withAsterisk
+        type="password"
+        {...getInputProps("password")}
+      />
 
-          <Button loading={status?.status === "loading"} type="submit">
-            Login
-          </Button>
-        </Box>
-      </Modal>
-
-      <UnstyledButton className={classes.signin} onClick={open}>
-        <Group>
-          <Avatar radius="xl" />
-
-          <div style={{ flex: 1 }}>
-            <Text size="sm" fw={500}>
-              Login
-            </Text>
-
-            <Text c="dimmed" size="xs">
-              You must be registered and logged in to use the system.
-            </Text>
-          </div>
-
-          <IconChevronRight
-            style={{ width: rem(14), height: rem(14) }}
-            stroke={1.5}
-          />
-        </Group>
-      </UnstyledButton>
-    </>
+      <Button loading={status?.status === "loading"} type="submit">
+        Login
+      </Button>
+    </Box>
   );
 }

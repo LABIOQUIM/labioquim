@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mantine/core";
 import { IconRocket } from "@tabler/icons-react";
+import Link from "next/link";
 
 import styles from "./CallToActionSection.module.css";
 
@@ -14,15 +15,10 @@ export function LanderCallToActionSection() {
           insights from their molecular simulations. Launch the app and start
           exploring today!
         </p>
-        <a
-          href="https://visualdynamics.fiocruz.br/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.button}
-        >
+        <Link href="/auth/login" className={styles.button}>
           <IconRocket size={22} />
           Get Started Now
-        </a>
+        </Link>
       </div>
     </Box>
   );

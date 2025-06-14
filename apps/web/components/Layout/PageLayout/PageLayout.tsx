@@ -7,11 +7,24 @@ import { queryClient } from "@/lib/queryClient";
 
 import classes from "./PageLayout.module.css";
 
+interface Props extends BoxProps {
+  withoutHydration?: boolean;
+}
+
 export function PageLayout({
   children,
   className,
+  withoutHydration = false,
   ...props
-}: PropsWithChildren<BoxProps>) {
+}: PropsWithChildren<Props>) {
+  if (withoutHydration) {
+    return (
+      <Box className={clsx(classes.container, className)} {...props}>
+        {children}
+      </Box>
+    );
+  }
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Box className={clsx(classes.container, className)} {...props}>

@@ -49,6 +49,9 @@
 }
 
 .launchButton {
+  display: flex;
+  flex-direction: row;
+  gap: var(--mantine-spacing-xs);
   background-color: var(--mantine-color-blue-6); /* Primary button color */
   color: var(--mantine-color-white);
   font-weight: 500; /* Inter 500 */
