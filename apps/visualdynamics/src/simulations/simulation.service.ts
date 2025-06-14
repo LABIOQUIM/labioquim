@@ -489,16 +489,6 @@ export class SimulationService {
     return readFileSync(join(runFolderPath, "results.zip"));
   }
 
-  async getMDPFiles() {
-    const runFolderPath = `${cwd()}/static/mdp`;
-
-    ChildProcess.execSync(`zip -r mdpfiles.zip *`, {
-      cwd: runFolderPath,
-    });
-
-    return readFileSync(join(runFolderPath, "mdpfiles.zip"));
-  }
-
   async getUserFile(path: string) {
     if (!existsSync(path)) {
       return "no-results";

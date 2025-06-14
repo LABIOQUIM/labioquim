@@ -236,14 +236,6 @@ export class SimulationController {
   }
 
   @UseGuards(UsernameGuard)
-  @Get("/downloads/mdp")
-  async getMDPFiles() {
-    const file = await this.simulationService.getMDPFiles();
-
-    return new StreamableFile(file);
-  }
-
-  @UseGuards(UsernameGuard)
   @Get("/latest")
   async getLatestSimulations(@Req() request: Request) {
     const data = this.simulationService.getUserLastSimulations(
