@@ -1,52 +1,50 @@
-import { AspectRatio, Box, Card, CardSection, Title } from "@mantine/core";
+import { Box, Title } from "@mantine/core";
 
-import { PageLayout } from "@/components/Layout/PageLayout/PageLayout";
+import { LanderCallToActionSection } from "@/components/Lander/CallToActionSection";
+import { LanderLayout } from "@/components/Lander/Layout";
+import { YouTubePlayer } from "@/components/YoutubePlayer/YoutubePlayer";
 
 import classes from "./page.module.css";
 
 const simulationVideos = [
   {
-    title: "APO Simulation",
-    url: "https://drive.google.com/file/d/1BbpmeqJXhPR9uqJOa_RXZy9j77-s0XA1/preview",
+    title: "ACPYPE Simulation",
+    suffix: "1",
+    videoId: "wwlZOixBHe8",
   },
   {
     title: "ACPYPE Simulation Preparation",
-    url: "https://drive.google.com/file/d/1UoIQWeyCRnQDmQh7UKXpa5qgFBAEeja8/preview",
+    suffix: "2",
+    videoId: "t0KfsNX2LgQ",
   },
   {
-    title: "ACPYPE simulation",
-    url: "https://drive.google.com/file/d/16CF3iHisYdq4aHA6RCAAsO0NFF_F6lpF/preview",
+    title: "APO Simulation",
+    suffix: "3",
+    videoId: "4icOoqJlWnA",
   },
   {
-    title: "Download Simulation Generated Contents",
-    url: "https://drive.google.com/file/d/1wwwKYAScCA6b6XbIkz84-XZEIiqK91XD/preview",
+    title: "Download Simulation Results",
+    suffix: "4",
+    videoId: "kfruw1E8ZEo",
   },
 ];
 
 export default function GuidesPage() {
   return (
-    <PageLayout>
-      <Title order={1}>Guides</Title>
-
-      <Title order={2}>Visual Dynamics</Title>
+    <LanderLayout>
+      <Title order={1} className={classes.sectionTitle}>
+        Guides
+      </Title>
       <Box className={classes.videosContainer}>
         {simulationVideos.map((video) => (
-          <Card key={video.url}>
-            <CardSection>
-              <AspectRatio ratio={16 / 9}>
-                <iframe
-                  src={video.url}
-                  title={video.title}
-                  style={{ border: 0 }}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </AspectRatio>
-            </CardSection>
-            <Title order={3}>{video.title}</Title>
-          </Card>
+          <YouTubePlayer
+            key={video.videoId}
+            uniquePlayerIdSuffix={video.suffix}
+            videoId={video.videoId}
+          />
         ))}
       </Box>
-    </PageLayout>
+      <LanderCallToActionSection />
+    </LanderLayout>
   );
 }

@@ -1,7 +1,7 @@
 import { Title } from "@mantine/core";
 
 import { PasswordResetForm } from "@/components/Auth/PasswordReset/PasswordResetForm";
-import { PageLayout } from "@/components/Layout/PageLayout/PageLayout";
+import { LanderLayout } from "@/components/Lander/Layout";
 
 interface Props {
   params: Promise<{
@@ -17,10 +17,10 @@ export default async function AccountActivationPage({ params }: Props) {
   }
 
   return (
-    <PageLayout>
+    <LanderLayout>
       <Title>Password Reset</Title>
 
       <PasswordResetForm resetId={resetId} />
-    </PageLayout>
+    </LanderLayout>
   );
 }

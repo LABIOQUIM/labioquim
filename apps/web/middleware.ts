@@ -19,6 +19,10 @@ interface PublicRoute {
 
 const publicRoutes: PublicRoute[] = [
   { path: "/", whenAuthenticated: "donothing" },
+  { path: "/auth/login", whenAuthenticated: "donothing" },
+  { path: "/auth/register", whenAuthenticated: "donothing" },
+  { path: "/analytics", whenAuthenticated: "donothing" },
+  { path: "/guides", whenAuthenticated: "donothing" },
   {
     path: "/account/email-validation",
     whenAuthenticated: "donothing",

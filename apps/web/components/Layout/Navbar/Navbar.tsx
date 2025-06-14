@@ -13,9 +13,6 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 
-import { Login } from "@/components/Auth/Login/Login";
-import { PasswordReset } from "@/components/Auth/PasswordReset/PasswordReset";
-import { Register } from "@/components/Auth/Register/Register";
 import { User } from "@/components/Auth/User/User";
 import { useAuth } from "@/hooks/auth/useAuth";
 import pkg from "@/package.json";
@@ -31,7 +28,7 @@ const sections: NavSection[] = [
       {
         icon: IconCrown,
         label: "Admin Dashboard",
-        href: "/administration",
+        href: "/dashboard/administration",
         role: "ADMINISTRATOR",
       },
       { icon: IconHome, label: "Home", href: "/" },
@@ -50,17 +47,25 @@ const sections: NavSection[] = [
   {
     title: "Visual Dynamics",
     links: [
-      { icon: IconInfoCircle, label: "About", href: "/simulations/about" },
-      { icon: IconInfoCircle, label: "My Submissions", href: "/simulations" },
+      {
+        icon: IconInfoCircle,
+        label: "About",
+        href: "/dashboard/simulations/about",
+      },
+      {
+        icon: IconInfoCircle,
+        label: "My Submissions",
+        href: "/dashboard/simulations",
+      },
       {
         icon: IconPlus,
         label: "New Free Protein (APO)",
-        href: "/simulations/apo",
+        href: "/dashboard/simulations/apo",
       },
       {
         icon: IconPlus,
         label: "New Protein + Ligand",
-        href: "/simulations/acpype",
+        href: "/dashboard/simulations/acpype",
       },
     ],
   },
@@ -160,28 +165,12 @@ export function Navbar({ toggle }: Props) {
         </Box>
       </Box>
 
-      {data?.session ? (
-        <>
-          <Box className={classes.section}>
-            <User />
-          </Box>
-          <Box className={classes.section}>
-            <Box className={classes.mainLinks}>{...mainLinks}</Box>
-          </Box>
-        </>
-      ) : (
-        <>
-          <Box className={classes.section}>
-            <Login />
-          </Box>
-          <Box className={classes.section}>
-            <Register />
-          </Box>
-          <Box className={classes.section}>
-            <PasswordReset />
-          </Box>
-        </>
-      )}
+      <Box className={classes.section}>
+        <User />
+      </Box>
+      <Box className={classes.section}>
+        <Box className={classes.mainLinks}>{...mainLinks}</Box>
+      </Box>
     </Box>
   );
 }

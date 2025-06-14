@@ -3533,6 +3533,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/youtube@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "@types/youtube@npm:0.1.1"
+  checksum: eab9634ca924914f69594fb695f87ca1efb42a83b4eee3532834a192b0dbf9679996f45357c147654816addbc238f7e82bf4008d157f5163963acbb6b9fb366d
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:^5.60.1":
   version: 5.62.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.62.0"
@@ -5759,7 +5766,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge@npm:^4.2.2, deepmerge@npm:^4.3.1":
+"deepmerge@npm:^4.0.0, deepmerge@npm:^4.2.2, deepmerge@npm:^4.3.1":
   version: 4.3.1
   resolution: "deepmerge@npm:4.3.1"
   checksum: 058d9e1b0ff1a154468bf3837aea436abcfea1ba1d165ddaaf48ca93765fdd01a30d33c36173da8fbbed951dd0a267602bc782fe288b0fc4b7e1e7091afc4529
@@ -9383,6 +9390,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"load-script@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "load-script@npm:1.0.0"
+  checksum: 8458e3f07b4a86f8d9d66e47a987811491a5d013af23ba7b371c6d3c9dc899885b072ccf65abf7874c10cb197d4975eacd8a7a125bfb38dbbcb267539f5dc1e9
+  languageName: node
+  linkType: hard
+
 "load-tsconfig@npm:^0.2.3":
   version: 0.2.5
   resolution: "load-tsconfig@npm:0.2.5"
@@ -9771,6 +9785,13 @@ __metadata:
   dependencies:
     fs-monkey: "npm:^1.0.4"
   checksum: 7c9cdb453a6b06e87f11e2dbe6c518fd3c1c1581b370ffa24f42f3fd5b1db8c2203f596e43321a0032963f3e9b66400f2c3cf043904ac496d6ae33eafd0878fe
+  languageName: node
+  linkType: hard
+
+"memoize-one@npm:^5.1.1":
+  version: 5.2.1
+  resolution: "memoize-one@npm:5.2.1"
+  checksum: b7141dc148b5c6fdd51e77ecf0421fd2581681eb8756e0b3dfbd4fe765b5e2b5a6bc90214bb6f19a96b6aed44de17eda3407142a7be9e24ccd0774bbd9874d1b
   languageName: node
   linkType: hard
 
@@ -11309,7 +11330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.6.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -11502,6 +11523,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-fast-compare@npm:^3.0.1":
+  version: 3.2.2
+  resolution: "react-fast-compare@npm:3.2.2"
+  checksum: a6826180ba75cefba1c8d3ac539735f9b627ca05d3d307fe155487f5d0228d376dac6c9708d04a283a7b9f9aee599b637446635b79c8c8753d0b4eece56c125c
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -11530,6 +11558,21 @@ __metadata:
     react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   checksum: e40a568a59ddccce3bdf23d0990cbd996e5c1d82f268ca5d23e6f926739fdac7370be0e836db543cc77c30e853fe5c849b58be29d867db4786deb2d2bd57cf33
+  languageName: node
+  linkType: hard
+
+"react-player@npm:^2.16.0":
+  version: 2.16.0
+  resolution: "react-player@npm:2.16.0"
+  dependencies:
+    deepmerge: "npm:^4.0.0"
+    load-script: "npm:^1.0.0"
+    memoize-one: "npm:^5.1.1"
+    prop-types: "npm:^15.7.2"
+    react-fast-compare: "npm:^3.0.1"
+  peerDependencies:
+    react: ">=16.6.0"
+  checksum: d7e2824f9cb52afc71e5661e341360153087fc4fe231ee4b6c0b968fcae1efecc208416cd69bfa24a024265fdca65aee3f74a290a86ccf1e5c0452102b82cb0d
   languageName: node
   linkType: hard
 
@@ -14157,6 +14200,7 @@ __metadata:
     "@types/node": "npm:^22"
     "@types/react": "npm:^18.3.1"
     "@types/react-dom": "npm:^18.3.0"
+    "@types/youtube": "npm:^0.1.1"
     axios: "npm:^1.7.9"
     clsx: "npm:^2.1.1"
     database: "workspace:*"
@@ -14172,6 +14216,7 @@ __metadata:
     react: "npm:^18"
     react-dom: "npm:^18"
     react-email: "npm:3.0.2"
+    react-player: "npm:^2.16.0"
     react-viewport-list: "npm:^7.1.2"
     recharts: "npm:^2"
     sharp: "npm:^0.33.5"
